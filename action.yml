@@ -14,7 +14,7 @@ inputs:
   plugins:
     description: Comma-separated list of plugins to enable
     required: false
-    default: 'dog'
+    default: 'dog,help'
 
 outputs:
   event_name:
@@ -28,7 +28,11 @@ outputs:
   dog_posted:
     description: Whether a dog image was posted
   issue_number:
-    description: Issue number where dog was posted
+    description: Issue number where action was taken
+  help_action:
+    description:
+      The help action taken (help-added, good-first-issue-added, help-removed,
+      good-first-issue-removed)
 
 runs:
   using: node24
