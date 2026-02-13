@@ -342,7 +342,7 @@ export class EventHandlers {
           pluginLogger.info(
             `Handler completed: ${result.success ? 'success' : 'failure'}`
           )
-          return { pluginName: plugin.name, result, agent }
+          return { pluginName: plugin.name, result }
         } catch (error) {
           const errorMessage =
             error instanceof Error ? error.message : 'Unknown error'
@@ -353,8 +353,7 @@ export class EventHandlers {
               success: false,
               tookAction: false,
               message: errorMessage
-            },
-            agent
+            }
           }
         }
       })
