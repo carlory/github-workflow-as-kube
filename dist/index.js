@@ -43918,8 +43918,7 @@ const genericCommentHandler = async (payload, context, agent) => {
         const labels = issue.labels.map((l) => typeof l === 'string' ? l : l.name || '');
         const hasHelp = labels.includes(HELP_LABEL);
         const hasGoodFirstIssue = labels.includes(GOOD_FIRST_ISSUE_LABEL);
-        const botUser = await octokit.rest.users.getAuthenticated();
-        const botLogin = botUser.data.login;
+        const botLogin = 'github-actions[bot]';
         if (hasHelp && helpRemoveRe.test(body)) {
             await octokit.rest.issues.removeLabel({
                 owner,

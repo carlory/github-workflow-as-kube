@@ -216,8 +216,7 @@ const genericCommentHandler: GenericCommentHandler = async (
     const hasHelp = labels.includes(HELP_LABEL)
     const hasGoodFirstIssue = labels.includes(GOOD_FIRST_ISSUE_LABEL)
 
-    const botUser = await octokit.rest.users.getAuthenticated()
-    const botLogin = botUser.data.login
+    const botLogin = 'github-actions[bot]'
 
     if (hasHelp && helpRemoveRe.test(body)) {
       await octokit.rest.issues.removeLabel({
