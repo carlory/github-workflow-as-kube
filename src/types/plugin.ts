@@ -84,11 +84,13 @@ export type GenericCommentHandler = (
       number: number
       title: string
       html_url: string
+      state?: string
     }
     pull_request?: {
       number: number
       title: string
       html_url: string
+      state?: string
     }
     review?: {
       id: number

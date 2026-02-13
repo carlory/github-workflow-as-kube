@@ -303,3 +303,86 @@ To check the status of cached licenses, run the following command:
 ```bash
 licensed status
 ```
+
+## Available Plugins
+
+This action includes a plugin architecture that supports multiple plugins. The
+following plugins are available:
+
+### Help Plugin
+
+The help plugin manages `help wanted` and `good first issue` labels on issues
+and pull requests, similar to the
+[Prow help plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/help/help.go).
+
+**Commands:**
+
+- `/help` - Adds the `help wanted` label to an issue or pull request
+- `/remove-help` - Removes both `help wanted` and `good first issue` labels
+- `/good-first-issue` - Adds both `good first issue` and `help wanted` labels
+- `/remove-good-first-issue` - Removes only the `good first issue` label
+
+**Features:**
+
+- Automatically posts informational comments when labels are added
+- Prunes old bot comments when labels are removed
+- Only processes open issues and pull requests
+- Case-insensitive command matching
+
+**Example Usage:**
+
+```yaml
+name: Process Issue Comments
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  help-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'help'
+```
+
+### Dog Plugin
+
+The dog plugin responds to dog-related commands with images.
+
+**Commands:**
+
+- `/woof` or `/bark` - Posts a random dog image
+- `/this-is-fine` - Posts the "this is fine" meme
+- `/this-is-not-fine` - Posts the "this is not fine" meme
+- `/this-is-unbearable` - Posts the "this is unbearable" meme
+
+**Example Usage:**
+
+```yaml
+name: Dog Commands
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  dog-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'dog'
+```
+
+### Multiple Plugins
+
+You can enable multiple plugins by providing a comma-separated list:
+
+```yaml
+- uses: carlory/github-workflow-as-kube@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    plugins: 'dog,help'
+```

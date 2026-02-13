@@ -8,6 +8,7 @@ import type { EventContext, GitHubEventPayload } from '../types/index.js'
 import { PluginRegistry } from '../plugins/registry.js'
 import { EventHandlers } from '../handlers/event-handlers.js'
 import { dogPlugin } from '../plugins/dog/dog.js'
+import { helpPlugin } from '../plugins/help/help.js'
 import { Logger } from '../utils/logger.js'
 import { EventValidator } from '../utils/validator.js'
 
@@ -41,7 +42,7 @@ export class EventDispatcher {
   }
 
   private registerBuiltInPlugins(enabledPlugins: string[]): void {
-    const plugins = [dogPlugin]
+    const plugins = [dogPlugin, helpPlugin]
 
     for (const plugin of plugins) {
       if (enabledPlugins.includes(plugin.name)) {
