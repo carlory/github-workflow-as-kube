@@ -1,27 +1,40 @@
 # GitHub Action Metadata
 # Following Kubernetes-style resource definition patterns
-name: 'GitHub Workflow as Kubernetes'
+name: 'Prow Commands for GitHub'
 description: >-
-  A GitHub Action demonstrating Kubernetes-style declarative patterns for
-  workflow management
+  Kubernetes Prow-style command processor for managing issues and pull requests.
+  Supports /assign, /label, /lgtm, /hold, /cc, /close, and more commands
+  similar to kubernetes/kubernetes Prow bot.
 author: 'carlory'
 
 # Branding - Visual identity in GitHub Marketplace
 branding:
-  icon: 'box'
+  icon: 'command'
   color: 'blue'
 
 # Inputs - Parameters for the action (similar to Kubernetes spec fields)
 inputs:
-  milliseconds:
-    description: 'Wait time in milliseconds before completion'
+  github-token:
+    description: 'GitHub token for API access (use secrets.GITHUB_TOKEN)'
     required: true
-    default: '1000'
+  command:
+    description: >-
+      Prow command to execute (e.g., assign, label, lgtm, hold, cc, close).
+      Auto-detected from issue comment if not specified.
+    required: false
+  args:
+    description: 'Command arguments (e.g., username for assign, label names)'
+    required: false
+  issue-number:
+    description: 'Issue or PR number. Auto-detected from context if not specified.'
+    required: false
 
 # Outputs - Results produced by the action (similar to Kubernetes status fields)
 outputs:
-  time:
-    description: 'Timestamp when the action completed execution'
+  result:
+    description: 'Command execution result (success or error message)'
+  command-executed:
+    description: 'The command that was executed'
 
 # Runtime specification
 runs:
