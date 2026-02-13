@@ -43254,7 +43254,7 @@ class PluginRegistry {
         return Array.from(this.plugins.values());
     }
     getEnabled() {
-        return this.getAll().filter(plugin => plugin.config?.enabled !== false);
+        return this.getAll().filter((plugin) => plugin.config?.enabled !== false);
     }
     getIssueHandlers() {
         const result = [];
@@ -43640,7 +43640,7 @@ async function fetchDogImage(retries = 5) {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
+            const data = (await response.json());
             const url = data.url;
             if (!FILETYPES_REGEX.test(url)) {
                 continue;
@@ -43818,29 +43818,29 @@ class EventValidator {
         return typeof payload === 'object' && payload !== null;
     }
     static hasRepository(payload) {
-        return 'repository' in payload &&
+        return ('repository' in payload &&
             typeof payload.repository === 'object' &&
-            payload.repository !== null;
+            payload.repository !== null);
     }
     static hasIssue(payload) {
-        return 'issue' in payload &&
+        return ('issue' in payload &&
             typeof payload.issue === 'object' &&
-            payload.issue !== null;
+            payload.issue !== null);
     }
     static hasPullRequest(payload) {
-        return 'pull_request' in payload &&
+        return ('pull_request' in payload &&
             typeof payload.pull_request === 'object' &&
-            payload.pull_request !== null;
+            payload.pull_request !== null);
     }
     static hasComment(payload) {
-        return 'comment' in payload &&
+        return ('comment' in payload &&
             typeof payload.comment === 'object' &&
-            payload.comment !== null;
+            payload.comment !== null);
     }
     static hasReview(payload) {
-        return 'review' in payload &&
+        return ('review' in payload &&
             typeof payload.review === 'object' &&
-            payload.review !== null;
+            payload.review !== null);
     }
 }
 
@@ -43888,7 +43888,10 @@ class EventDispatcher {
             const token = coreExports.getInput('github-token', { required: true });
             process.env.GITHUB_TOKEN = token;
             const pluginsInput = coreExports.getInput('plugins') || 'dog';
-            const enabledPlugins = pluginsInput.split(',').map(p => p.trim()).filter(p => p.length > 0);
+            const enabledPlugins = pluginsInput
+                .split(',')
+                .map((p) => p.trim())
+                .filter((p) => p.length > 0);
             this.logger.info(`Enabled plugins: ${enabledPlugins.join(', ')}`);
             this.registerBuiltInPlugins(enabledPlugins);
             const payload = context.payload;
@@ -43918,7 +43921,8 @@ class EventDispatcher {
                 }
                 break;
             case 'issue_comment':
-                if (EventValidator.hasComment(payload) && EventValidator.hasIssue(payload)) {
+                if (EventValidator.hasComment(payload) &&
+                    EventValidator.hasIssue(payload)) {
                     await this.handlers.handleGenericCommentEvent(payload, this.context);
                 }
                 break;
@@ -43961,7 +43965,7 @@ async function run() {
  * main logic with proper error handling.
  */
 /* istanbul ignore next */
-run().catch(error => {
+run().catch((error) => {
     coreExports.setFailed(error.message);
     process.exit(1);
 });
