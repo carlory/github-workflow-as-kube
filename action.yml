@@ -1,23 +1,34 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
+name: GitHub Workflow as Kube
+description: Process GitHub events with plugin architecture
+author: carlory
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
   icon: heart
   color: red
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  github-token:
+    description: GitHub token for API access
     required: true
-    default: '1000'
+    default: ${{ github.token }}
+  plugins:
+    description: Comma-separated list of plugins to enable
+    required: false
+    default: 'dog'
 
-# Define your outputs here.
 outputs:
-  time:
-    description: Your output description here
+  event_name:
+    description: The name of the GitHub event
+  event_guid:
+    description: The unique identifier for this event
+  repository:
+    description: The repository name in owner/repo format
+  plugins_enabled:
+    description: List of enabled plugins
+  dog_posted:
+    description: Whether a dog image was posted
+  issue_number:
+    description: Issue number where dog was posted
 
 runs:
   using: node24

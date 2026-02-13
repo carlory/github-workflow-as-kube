@@ -57,8 +57,13 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'dog'
 
       - name: Print Output
         id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+        run: |
+          echo "Event Name: ${{ steps.test-action.outputs.event_name }}"
+          echo "Event GUID: ${{ steps.test-action.outputs.event_guid }}"
+          echo "Repository: ${{ steps.test-action.outputs.repository }}"
+          echo "Plugins Enabled: ${{ steps.test-action.outputs.plugins_enabled }}"
