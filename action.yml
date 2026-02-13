@@ -2,8 +2,8 @@
 # Following Kubernetes-style resource definition patterns
 name: 'GitHub Workflow as Kubernetes'
 description: >-
-  Manage GitHub workflows with Kubernetes-like declarative patterns and
-  resource management
+  A GitHub Action demonstrating Kubernetes-style declarative patterns for
+  workflow management
 author: 'carlory'
 
 # Branding - Visual identity in GitHub Marketplace
