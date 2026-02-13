@@ -43622,10 +43622,10 @@ class EventHandlers {
  * Dog plugin - Responds to dog commands with images
  */
 const DOG_API_URL = 'https://random.dog/woof.json';
-const FINE_IMAGES_ROOT = 'https://storage.googleapis.com/this-is-fine-images/';
-const FINE_IMG = 'this-is-fine.png';
-const NOT_FINE_IMG = 'this-is-not-fine.png';
-const UNBEARABLE_IMG = 'this-is-unbearable.png';
+const FINE_IMAGES_ROOT = 'https://raw.githubusercontent.com/carlory/github-workflow-as-kube/main/src/plugins/dog/this-is-fine-images/';
+const FINE_IMG = 'this_is_fine.png';
+const NOT_FINE_IMG = 'this_is_not_fine.png';
+const UNBEARABLE_IMG = 'this_is_unbearable.png';
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 const WOOF_REGEX = /^\/(woof|bark)\s*$/i;
 const FINE_REGEX = /^\/this-is-fine\s*$/i;
