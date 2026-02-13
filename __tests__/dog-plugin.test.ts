@@ -32,7 +32,7 @@ jest.unstable_mockModule('../src/utils/logger.js', () => ({
 
 // Mock fetch globally
 const mockFetch = jest.fn()
-global.fetch = mockFetch as any
+global.fetch = mockFetch as typeof fetch
 
 // Import after mocking
 const { dogPlugin } = await import('../src/plugins/dog/dog.js')
@@ -107,7 +107,11 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockFetch
@@ -122,7 +126,11 @@ describe('Dog Plugin', () => {
 
       mockCreateComment.mockResolvedValue({})
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(true)
@@ -139,7 +147,11 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockFetch
@@ -154,7 +166,11 @@ describe('Dog Plugin', () => {
 
       mockCreateComment.mockResolvedValue({})
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(true)
@@ -169,16 +185,26 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockCreateComment.mockResolvedValue({})
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(true)
-      expect(mockLoggerInfo).toHaveBeenCalledWith('This is fine command detected')
+      expect(mockLoggerInfo).toHaveBeenCalledWith(
+        'This is fine command detected'
+      )
       expect(mockCreateComment).toHaveBeenCalled()
     })
 
@@ -191,16 +217,26 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 456, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 456,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockCreateComment.mockResolvedValue({})
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(true)
-      expect(mockLoggerInfo).toHaveBeenCalledWith('This is not fine command detected')
+      expect(mockLoggerInfo).toHaveBeenCalledWith(
+        'This is not fine command detected'
+      )
     })
 
     it('should detect /this-is-unbearable command', async () => {
@@ -212,16 +248,26 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        pull_request: { number: 789, title: 'Test PR', html_url: 'https://github.com/test' }
+        pull_request: {
+          number: 789,
+          title: 'Test PR',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockCreateComment.mockResolvedValue({})
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(true)
-      expect(mockLoggerInfo).toHaveBeenCalledWith('This is unbearable command detected')
+      expect(mockLoggerInfo).toHaveBeenCalledWith(
+        'This is unbearable command detected'
+      )
     })
   })
 
@@ -235,10 +281,18 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(false)
@@ -254,10 +308,18 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(false)
@@ -266,10 +328,18 @@ describe('Dog Plugin', () => {
     it('should handle missing comment', async () => {
       const payload = {
         ...basePayload,
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(false)
@@ -288,10 +358,18 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(false)
       expect(result.tookAction).toBe(false)
@@ -310,7 +388,11 @@ describe('Dog Plugin', () => {
         }
       }
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(false)
       expect(result.tookAction).toBe(false)
@@ -326,12 +408,20 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockCreateComment.mockRejectedValue(new Error('API Error'))
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(false)
       expect(result.tookAction).toBe(false)
@@ -349,7 +439,11 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 999, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 999,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockCreateComment.mockResolvedValue({})
@@ -372,7 +466,11 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        pull_request: { number: 555, title: 'Test PR', html_url: 'https://github.com/test' }
+        pull_request: {
+          number: 555,
+          title: 'Test PR',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockFetch
@@ -406,7 +504,11 @@ describe('Dog Plugin', () => {
           user: { login: 'awesome-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockCreateComment.mockResolvedValue({})
@@ -437,7 +539,11 @@ describe('Dog Plugin', () => {
           user: { login: 'test-user' },
           html_url: 'https://github.com/test'
         },
-        issue: { number: 123, title: 'Test Issue', html_url: 'https://github.com/test' }
+        issue: {
+          number: 123,
+          title: 'Test Issue',
+          html_url: 'https://github.com/test'
+        }
       }
 
       mockFetch
@@ -452,7 +558,11 @@ describe('Dog Plugin', () => {
 
       mockCreateComment.mockResolvedValue({})
 
-      const result = await dogPlugin.handlers.genericComment!(payload, context, agent)
+      const result = await dogPlugin.handlers.genericComment!(
+        payload,
+        context,
+        agent
+      )
 
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(true)
