@@ -1,24 +1,29 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
+# GitHub Action Metadata
+# Following Kubernetes-style resource definition patterns
+name: 'GitHub Workflow as Kubernetes'
+description:
+  'Manage GitHub workflows with Kubernetes-like declarative patterns and
+  resource management'
+author: 'carlory'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
+# Branding - Visual identity in GitHub Marketplace
 branding:
-  icon: heart
-  color: red
+  icon: 'box'
+  color: 'blue'
 
-# Define your inputs here.
+# Inputs - Parameters for the action (similar to Kubernetes spec fields)
 inputs:
   milliseconds:
-    description: Your input description here
+    description: 'Wait time in milliseconds before completion'
     required: true
     default: '1000'
 
-# Define your outputs here.
+# Outputs - Results produced by the action (similar to Kubernetes status fields)
 outputs:
   time:
-    description: Your output description here
+    description: 'Timestamp when the action completed execution'
 
+# Runtime specification
 runs:
   using: node24
   main: dist/index.js
