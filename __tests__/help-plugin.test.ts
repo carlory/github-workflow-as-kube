@@ -10,7 +10,6 @@ const mockRemoveLabel = jest.fn()
 const mockGetIssue = jest.fn()
 const mockListComments = jest.fn()
 const mockDeleteComment = jest.fn()
-const mockGetAuthenticated = jest.fn()
 
 const mockGetOctokit = jest.fn(() => ({
   rest: {
@@ -21,9 +20,6 @@ const mockGetOctokit = jest.fn(() => ({
       get: mockGetIssue,
       listComments: mockListComments,
       deleteComment: mockDeleteComment
-    },
-    users: {
-      getAuthenticated: mockGetAuthenticated
     }
   }
 }))
@@ -98,12 +94,6 @@ describe('Help Plugin', () => {
     mockGetIssue.mockResolvedValue({
       data: {
         labels: []
-      }
-    })
-
-    mockGetAuthenticated.mockResolvedValue({
-      data: {
-        login: 'github-actions[bot]'
       }
     })
 
