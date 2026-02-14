@@ -376,6 +376,47 @@ jobs:
           plugins: 'dog'
 ```
 
+### Hold Plugin
+
+The hold plugin allows anyone to add or remove the `do-not-merge/hold` label
+from pull requests to temporarily prevent merging without withholding approval,
+similar to the
+[Prow hold plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/hold/hold.go).
+
+**Commands:**
+
+- `/hold` - Adds the `do-not-merge/hold` label to a pull request
+- `/hold cancel` - Removes the `do-not-merge/hold` label from a pull request
+- `/unhold` - Removes the `do-not-merge/hold` label (alias for `/hold cancel`)
+- `/remove-hold` - Removes the `do-not-merge/hold` label (alias for
+  `/hold cancel`)
+
+**Features:**
+
+- Only processes pull requests (ignores issues)
+- Only processes open pull requests
+- Case-insensitive command matching
+- Idempotent operations (won't add label if already present, won't remove if not
+  present)
+
+**Example Usage:**
+
+```yaml
+name: Process PR Comments
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  hold-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'hold'
+```
+
 ### Multiple Plugins
 
 You can enable multiple plugins by providing a comma-separated list:
@@ -384,5 +425,5 @@ You can enable multiple plugins by providing a comma-separated list:
 - uses: carlory/github-workflow-as-kube@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    plugins: 'dog,help'
+    plugins: 'dog,help,hold'
 ```
