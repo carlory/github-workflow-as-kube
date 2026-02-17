@@ -27,6 +27,8 @@ outputs:
     description: List of enabled plugins
   dog_posted:
     description: Whether a dog image was posted
+  pony_posted:
+    description: Whether a pony image was posted
   issue_number:
     description: Issue number where action was taken
   help_action:
