@@ -464,5 +464,40 @@ You can enable multiple plugins by providing a comma-separated list:
 - uses: carlory/github-workflow-as-kube@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    plugins: 'dog,help,hold,pony'
+    plugins: 'dog,help,hold,pony,yuks'
+```
+
+### Yuks Plugin
+
+The yuks plugin responds to `/joke` commands with dad jokes from
+[icanhazdadjoke.com](https://icanhazdadjoke.com), similar to the
+[Prow yuks plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/yuks/yuks.go).
+
+**Commands:**
+
+- `/joke` - Posts a random dad joke
+
+**Features:**
+
+- Fetches jokes from icanhazdadjoke.com API
+- Automatically retries on failure (up to 5 attempts)
+- Escapes markdown characters to prevent injection attacks
+- Case-insensitive command matching
+
+**Example Usage:**
+
+```yaml
+name: Process Issue Comments
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  yuks-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'yuks'
 ```

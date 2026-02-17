@@ -43683,7 +43683,7 @@ function formatImageURL(imageType, url) {
             return url || '';
     }
 }
-function formatResponseRaw$2(imageURL, originalComment, author) {
+function formatResponseRaw$3(imageURL, originalComment, author) {
     return `![dog](${imageURL})
 
 <details>
@@ -43693,7 +43693,7 @@ ${originalComment}
 
 </details>`;
 }
-const genericCommentHandler$3 = async (payload, context, agent) => {
+const genericCommentHandler$4 = async (payload, context, agent) => {
     const logger = new Logger(context.eventName, context.eventGUID, 'dog');
     try {
         const comment = payload.comment;
@@ -43744,7 +43744,7 @@ const genericCommentHandler$3 = async (payload, context, agent) => {
         if (!issueNumber) {
             throw new Error('No issue or pull request number found');
         }
-        const responseBody = formatResponseRaw$2(imageURL, body, author);
+        const responseBody = formatResponseRaw$3(imageURL, body, author);
         await octokit.rest.issues.createComment({
             owner,
             repo,
@@ -43775,7 +43775,7 @@ const genericCommentHandler$3 = async (payload, context, agent) => {
 const dogPlugin = {
     name: 'dog',
     handlers: {
-        genericComment: genericCommentHandler$3
+        genericComment: genericCommentHandler$4
     },
     help: {
         description: 'Posts dog images in response to commands',
@@ -43843,7 +43843,7 @@ If this request no longer meets these requirements, the label can be removed
 by commenting with the \`/remove-good-first-issue\` command.
 `;
 }
-function formatResponseRaw$1(body, htmlURL, author, message) {
+function formatResponseRaw$2(body, htmlURL, author, message) {
     return `${message}
 
 <details>
@@ -43877,7 +43877,7 @@ async function pruneComments(octokit, owner, repo, issueNumber, botLogin, pruneM
         logger.error(`Failed to prune comments: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
 }
-const genericCommentHandler$2 = async (payload, context, agent) => {
+const genericCommentHandler$3 = async (payload, context, agent) => {
     const logger = new Logger(context.eventName, context.eventGUID, 'help');
     try {
         const comment = payload.comment;
@@ -43947,7 +43947,7 @@ const genericCommentHandler$2 = async (payload, context, agent) => {
         }
         if (!hasGoodFirstIssue && helpGoodFirstIssueRe.test(body)) {
             const message = goodFirstIssueMsg();
-            const responseBody = formatResponseRaw$1(body, htmlURL, author, message);
+            const responseBody = formatResponseRaw$2(body, htmlURL, author, message);
             await octokit.rest.issues.createComment({
                 owner,
                 repo,
@@ -43982,7 +43982,7 @@ const genericCommentHandler$2 = async (payload, context, agent) => {
         }
         if (!hasHelp && helpRe.test(body)) {
             const message = helpMsg();
-            const responseBody = formatResponseRaw$1(body, htmlURL, author, message);
+            const responseBody = formatResponseRaw$2(body, htmlURL, author, message);
             await octokit.rest.issues.createComment({
                 owner,
                 repo,
@@ -44043,7 +44043,7 @@ const genericCommentHandler$2 = async (payload, context, agent) => {
 const helpPlugin = {
     name: 'help',
     handlers: {
-        genericComment: genericCommentHandler$2
+        genericComment: genericCommentHandler$3
     },
     help: {
         description: "Adds or removes the 'help wanted' and 'good first issue' labels from issues.",
@@ -44079,7 +44079,7 @@ const helpPlugin = {
 const HOLD_LABEL = 'do-not-merge/hold';
 const holdRe = /^\/hold(\s.*)?$/im;
 const holdCancelRe = /^\/(remove-hold|hold\s+cancel|unhold)(\s.*)?$/im;
-const genericCommentHandler$1 = async (payload, context, agent) => {
+const genericCommentHandler$2 = async (payload, context, agent) => {
     const logger = new Logger(context.eventName, context.eventGUID, 'hold');
     try {
         const comment = payload.comment;
@@ -44187,7 +44187,7 @@ const genericCommentHandler$1 = async (payload, context, agent) => {
 const holdPlugin = {
     name: 'hold',
     handlers: {
-        genericComment: genericCommentHandler$1
+        genericComment: genericCommentHandler$2
     },
     help: {
         description: "Adds or removes the 'do-not-merge/hold' label from pull requests to temporarily prevent merging without withholding approval.",
@@ -44270,7 +44270,7 @@ async function fetchPonyImage(tags, logger, retries = 5) {
 function formatPonyURLs(small, full) {
     return `[![pony image](${small})](${full})`;
 }
-function formatResponseRaw(ponyMarkdown, originalComment, author) {
+function formatResponseRaw$1(ponyMarkdown, originalComment, author) {
     return `${ponyMarkdown}
 
 <details>
@@ -44280,7 +44280,7 @@ ${originalComment}
 
 </details>`;
 }
-const genericCommentHandler = async (payload, context, agent) => {
+const genericCommentHandler$1 = async (payload, context, agent) => {
     const logger = new Logger(context.eventName, context.eventGUID, 'pony');
     try {
         const comment = payload.comment;
@@ -44327,7 +44327,7 @@ const genericCommentHandler = async (payload, context, agent) => {
             }
         }
         if (responseBuilder.length > 0) {
-            const responseBody = formatResponseRaw(responseBuilder, body, author);
+            const responseBody = formatResponseRaw$1(responseBuilder, body, author);
             await octokit.rest.issues.createComment({
                 owner,
                 repo,
@@ -44352,7 +44352,7 @@ const genericCommentHandler = async (payload, context, agent) => {
             errorMsg =
                 'Failed to fetch pony image. The API may be temporarily unavailable.';
         }
-        const errorBody = formatResponseRaw(errorMsg, body, author);
+        const errorBody = formatResponseRaw$1(errorMsg, body, author);
         await octokit.rest.issues.createComment({
             owner,
             repo,
@@ -44380,7 +44380,7 @@ const genericCommentHandler = async (payload, context, agent) => {
 const ponyPlugin = {
     name: 'pony',
     handlers: {
-        genericComment: genericCommentHandler
+        genericComment: genericCommentHandler$1
     },
     help: {
         description: 'Posts pony images from theponyapi.com in response to commands',
@@ -44394,6 +44394,154 @@ const ponyPlugin = {
                 name: '/pony [name]',
                 description: 'Posts an image of a specific pony by name',
                 example: '/pony Twilight Sparkle'
+            }
+        ]
+    }
+};
+
+/**
+ * Yuks plugin - Responds to /joke command with dad jokes
+ */
+const JOKE_API_URL = 'https://icanhazdadjoke.com';
+const JOKE_REGEX = /^\/joke\s*$/im;
+const SIMPLE_REGEX = /^[\w?'!., ]+$/;
+/**
+ * Escapes markdown syntax in a string by converting special characters
+ * to numeric character references
+ */
+function escapeMarkdown(s) {
+    let result = '';
+    for (let i = 0; i < s.length; i++) {
+        const char = s[i];
+        if (SIMPLE_REGEX.test(char)) {
+            result += char;
+        }
+        else {
+            result += `&#${s.charCodeAt(i)};`;
+        }
+    }
+    return result;
+}
+/**
+ * Fetches a joke from the icanhazdadjoke.com API
+ */
+async function fetchJoke() {
+    const response = await fetch(JOKE_API_URL, {
+        headers: {
+            Accept: 'application/json'
+        }
+    });
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = (await response.json());
+    if (!data.joke) {
+        throw new Error('No joke found in response');
+    }
+    return data.joke;
+}
+function formatResponseRaw(joke, originalComment, author, commentURL) {
+    return `${joke}
+
+<details>
+<summary>Original comment by @${author}</summary>
+
+[${originalComment}](${commentURL})
+
+</details>`;
+}
+const genericCommentHandler = async (payload, context, agent) => {
+    const logger = new Logger(context.eventName, context.eventGUID, 'yuks');
+    try {
+        const comment = payload.comment;
+        if (!comment || !comment.body) {
+            return {
+                success: true,
+                tookAction: false
+            };
+        }
+        const body = comment.body.trim();
+        if (!JOKE_REGEX.test(body)) {
+            return {
+                success: true,
+                tookAction: false
+            };
+        }
+        logger.info('Joke command detected');
+        const token = process.env.GITHUB_TOKEN;
+        if (!token) {
+            throw new Error('GITHUB_TOKEN not found');
+        }
+        const octokit = getOctokit(token);
+        const [owner, repo] = payload.repository.full_name.split('/');
+        const issueNumber = payload.issue?.number || payload.pull_request?.number;
+        if (!issueNumber) {
+            throw new Error('No issue or pull request number found');
+        }
+        const errorBudget = 5;
+        let joke = null;
+        for (let attempt = 1; attempt <= errorBudget; attempt++) {
+            try {
+                joke = await fetchJoke();
+                if (joke && joke.length > 0) {
+                    break;
+                }
+                logger.info(`Joke is empty. Retrying (attempt ${attempt}/${errorBudget})`);
+            }
+            catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                logger.info(`Failed to get joke: ${errorMessage}. Retrying (attempt ${attempt}/${errorBudget})`);
+                if (attempt === errorBudget) {
+                    throw new Error(`Failed to get joke after ${errorBudget} attempts`);
+                }
+            }
+        }
+        if (!joke) {
+            throw new Error('Failed to get valid joke');
+        }
+        const sanitizedJoke = escapeMarkdown(joke);
+        logger.info(`Commenting with joke: "${sanitizedJoke}"`);
+        const commentURL = comment.html_url || '';
+        const responseBody = formatResponseRaw(sanitizedJoke, body, comment.user.login, commentURL);
+        await octokit.rest.issues.createComment({
+            owner,
+            repo,
+            issue_number: issueNumber,
+            body: responseBody
+        });
+        logger.info(`Posted joke to #${issueNumber}`);
+        agent.tookAction();
+        agent.setOutput('joke_posted', 'true');
+        agent.setOutput('issue_number', issueNumber.toString());
+        return {
+            success: true,
+            tookAction: true,
+            message: `Posted joke to #${issueNumber}`
+        };
+    }
+    catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        logger.error(`Yuks plugin error: ${errorMessage}`);
+        agent.setFailed(errorMessage);
+        return {
+            success: false,
+            tookAction: false,
+            message: errorMessage
+        };
+    }
+};
+const yuksPlugin = {
+    name: 'yuks',
+    handlers: {
+        genericComment: genericCommentHandler
+    },
+    help: {
+        description: 'The yuks plugin comments with jokes in response to the `/joke` command.',
+        commands: [
+            {
+                name: '/joke',
+                description: 'Tells a joke.',
+                example: '/joke'
             }
         ]
     }
@@ -44462,7 +44610,7 @@ class EventDispatcher {
         };
     }
     registerBuiltInPlugins(enabledPlugins) {
-        const plugins = [dogPlugin, helpPlugin, holdPlugin, ponyPlugin];
+        const plugins = [dogPlugin, helpPlugin, holdPlugin, ponyPlugin, yuksPlugin];
         for (const plugin of plugins) {
             if (enabledPlugins.includes(plugin.name)) {
                 plugin.config = { enabled: true };
