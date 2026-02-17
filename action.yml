@@ -14,7 +14,7 @@ inputs:
   plugins:
     description: Comma-separated list of plugins to enable
     required: false
-    default: 'dog,help,pony,size,yuks'
+    default: 'cat,dog,help,pony,size,yuks'
 
 outputs:
   event_name:
@@ -25,6 +25,8 @@ outputs:
     description: The repository name in owner/repo format
   plugins_enabled:
     description: List of enabled plugins
+  cat_posted:
+    description: Whether a cat image was posted
   dog_posted:
     description: Whether a dog image was posted
   pony_posted:
