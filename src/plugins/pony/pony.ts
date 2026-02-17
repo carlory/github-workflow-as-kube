@@ -192,7 +192,7 @@ const genericCommentHandler: GenericCommentHandler = async (
 
     let errorMsg = ''
     if (tagsSpecified) {
-      errorMsg = "Couldn't find a pony matching given tag(s)."
+      errorMsg = 'Could not find a pony matching given tag(s).'
     } else {
       errorMsg =
         'Failed to fetch pony image. The API may be temporarily unavailable.'

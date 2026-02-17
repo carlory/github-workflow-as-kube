@@ -44346,7 +44346,7 @@ const genericCommentHandler = async (payload, context, agent) => {
         }
         let errorMsg = '';
         if (tagsSpecified) {
-            errorMsg = "Couldn't find a pony matching given tag(s).";
+            errorMsg = 'Could not find a pony matching given tag(s).';
         }
         else {
             errorMsg =

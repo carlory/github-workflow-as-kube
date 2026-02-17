@@ -274,17 +274,25 @@ describe('Pony Plugin', () => {
         }
       }
 
-      mockFetch.mockResolvedValue({
-        ok: true,
-        json: async () => ({
-          pony: {
-            representations: {
-              small: 'https://example.com/pony-small.jpg',
-              full: 'https://example.com/pony-full.jpg'
-            }
-          }
-        })
-      })
+      // Mock 5 ponies (each pony needs JSON response + HEAD response for size check)
+      for (let i = 0; i < 5; i++) {
+        mockFetch
+          .mockResolvedValueOnce({
+            ok: true,
+            json: async () => ({
+              pony: {
+                representations: {
+                  small: 'https://example.com/pony-small.jpg',
+                  full: 'https://example.com/pony-full.jpg'
+                }
+              }
+            })
+          })
+          .mockResolvedValueOnce({
+            ok: true,
+            headers: new Headers([['content-length', '1000']])
+          })
+      }
 
       mockCreateComment.mockResolvedValue({})
 
