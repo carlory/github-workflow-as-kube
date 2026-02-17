@@ -456,45 +456,6 @@ jobs:
           plugins: 'pony'
 ```
 
-### Pony Plugin
-
-The pony plugin responds to pony commands with images from
-[theponyapi.com](https://theponyapi.com), similar to the
-[Prow pony plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/pony/pony.go).
-
-**Commands:**
-
-- `/pony` - Posts a random pony image
-- `/pony [name]` - Posts an image of a specific pony by name or tag (e.g.,
-  `/pony Twilight Sparkle`)
-
-**Features:**
-
-- Fetches pony images from theponyapi.com
-- Supports optional pony name/tag for specific ponies
-- Automatically validates image size
-- Supports multiple pony requests (up to 5 per comment)
-- Works with both issues and pull requests
-- Provides helpful error messages when ponies can't be found
-
-**Example Usage:**
-
-```yaml
-name: Pony Commands
-on:
-  issue_comment:
-    types: [created]
-
-jobs:
-  pony-plugin:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: carlory/github-workflow-as-kube@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          plugins: 'pony'
-```
-
 ### Yuks Plugin
 
 The yuks plugin responds to `/joke` commands with dad jokes from
@@ -509,7 +470,7 @@ The yuks plugin responds to `/joke` commands with dad jokes from
 
 - Fetches jokes from icanhazdadjoke.com API
 - Automatically retries on failure (up to 5 attempts)
-- Escapes markdown characters to prevent injection attacks
+- Escapes Markdown characters to prevent injection attacks
 - Case-insensitive command matching
 
 **Example Usage:**
