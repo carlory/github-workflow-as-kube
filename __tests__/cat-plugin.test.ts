@@ -455,7 +455,15 @@ describe('Cat Plugin', () => {
         owner: 'test-owner',
         repo: 'test-repo',
         issue_number: 123,
-        body: expect.stringContaining('thecatapi.com appears to be down')
+        body: expect.stringContaining(
+          'The cat API (thecatapi.com) is currently unavailable'
+        )
+      })
+      expect(mockCreateComment).toHaveBeenCalledWith({
+        owner: 'test-owner',
+        repo: 'test-repo',
+        issue_number: 123,
+        body: expect.not.stringContaining('![cat]')
       })
     })
 

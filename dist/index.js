@@ -43683,6 +43683,16 @@ ${originalComment}
 
 </details>`;
 }
+function formatErrorResponse(errorMessage, originalComment, author) {
+    return `${errorMessage}
+
+<details>
+<summary>Original comment by @${author}</summary>
+
+${originalComment}
+
+</details>`;
+}
 const genericCommentHandler$6 = async (payload, context, agent) => {
     const logger = new Logger(context.eventName, context.eventGUID, 'cat');
     try {
@@ -43735,7 +43745,7 @@ const genericCommentHandler$6 = async (payload, context, agent) => {
         }
         // If we couldn't get a cat image after 3 tries, post an error message
         if (!imageURL) {
-            let errorMsg = 'https://thecatapi.com appears to be down';
+            let errorMsg = 'The cat API (thecatapi.com) is currently unavailable. Please try again later.';
             if (category && !GRUMPY_KEYWORDS_REGEX.test(category)) {
                 errorMsg =
                     'Bad category. Please see https://api.thecatapi.com/api/categories/list';
@@ -43744,7 +43754,7 @@ const genericCommentHandler$6 = async (payload, context, agent) => {
                 owner,
                 repo,
                 issue_number: issueNumber,
-                body: formatResponseRaw$4(errorMsg, body, author)
+                body: formatErrorResponse(errorMsg, body, author)
             });
             throw new Error('Could not find a valid cat image');
         }

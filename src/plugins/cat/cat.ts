@@ -106,6 +106,21 @@ ${originalComment}
 </details>`
 }
 
+function formatErrorResponse(
+  errorMessage: string,
+  originalComment: string,
+  author: string
+): string {
+  return `${errorMessage}
+
+<details>
+<summary>Original comment by @${author}</summary>
+
+${originalComment}
+
+</details>`
+}
+
 const genericCommentHandler: GenericCommentHandler = async (
   payload,
   context: EventContext,
@@ -174,7 +189,8 @@ const genericCommentHandler: GenericCommentHandler = async (
 
     // If we couldn't get a cat image after 3 tries, post an error message
     if (!imageURL) {
-      let errorMsg = 'https://thecatapi.com appears to be down'
+      let errorMsg =
+        'The cat API (thecatapi.com) is currently unavailable. Please try again later.'
       if (category && !GRUMPY_KEYWORDS_REGEX.test(category)) {
         errorMsg =
           'Bad category. Please see https://api.thecatapi.com/api/categories/list'
@@ -184,7 +200,7 @@ const genericCommentHandler: GenericCommentHandler = async (
         owner,
         repo,
         issue_number: issueNumber,
-        body: formatResponseRaw(errorMsg, body, author)
+        body: formatErrorResponse(errorMsg, body, author)
       })
 
       throw new Error('Could not find a valid cat image')

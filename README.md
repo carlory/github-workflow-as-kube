@@ -353,7 +353,7 @@ jobs:
           plugins: 'cat'
 ```
 
-### Dog Plugin
+### Help Plugin
 
 The help plugin manages `help wanted` and `good first issue` labels on issues
 and pull requests, similar to the
