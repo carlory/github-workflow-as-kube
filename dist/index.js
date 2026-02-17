@@ -44497,16 +44497,30 @@ const pullRequestHandler = async (payload, context, agent) => {
         const prNumber = payload.pull_request.number;
         logger.info(`Processing PR #${prNumber} for size labeling`);
         // Get PR files and calculate total changes
-        const { data: files } = await octokit.rest.pulls.listFiles({
-            owner,
-            repo,
-            pull_number: prNumber,
-            per_page: 100
-        });
+        // Handle pagination for PRs with many files
         let totalChanges = 0;
-        for (const file of files) {
-            // Count additions and deletions
-            totalChanges += file.additions + file.deletions;
+        let page = 1;
+        const perPage = 100;
+        while (true) {
+            const { data: files } = await octokit.rest.pulls.listFiles({
+                owner,
+                repo,
+                pull_number: prNumber,
+                per_page: perPage,
+                page
+            });
+            if (files.length === 0) {
+                break;
+            }
+            for (const file of files) {
+                // Count additions and deletions
+                totalChanges += file.additions + file.deletions;
+            }
+            // If we got fewer files than perPage, we're done
+            if (files.length < perPage) {
+                break;
+            }
+            page++;
         }
         logger.info(`Total lines changed: ${totalChanges}`);
         // Use default sizes (can be made configurable in the future)
