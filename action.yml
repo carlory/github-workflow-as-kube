@@ -37,6 +37,8 @@ outputs:
       good-first-issue-removed)
   hold_action:
     description: The hold action taken (hold-added, hold-removed)
+  shrug_action:
+    description: The shrug action taken (shrug-added, shrug-removed)
   joke_posted:
     description: Whether a joke was posted
   size_label:

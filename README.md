@@ -498,6 +498,44 @@ jobs:
           plugins: 'pony'
 ```
 
+### Shrug Plugin
+
+The shrug plugin adds or removes the shrug label from issues and pull requests,
+similar to the
+[Prow shrug plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/shrug/shrug.go).
+
+**Commands:**
+
+- `/shrug` - Adds the `shrug` label to an issue or pull request
+- `/unshrug` - Removes the `shrug` label and posts a shrug emoji (¯\\\_(ツ)\_/¯)
+
+**Features:**
+
+- Works with both issues and pull requests
+- Only processes open issues and pull requests
+- Case-insensitive command matching
+- Posts the shrug emoji when removing the label
+- Idempotent operations (won't add label if already present, won't remove if not
+  present)
+
+**Example Usage:**
+
+```yaml
+name: Shrug Commands
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  shrug-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'shrug'
+```
+
 ### Yuks Plugin
 
 The yuks plugin responds to `/joke` commands with dad jokes from
@@ -541,5 +579,5 @@ You can enable multiple plugins by providing a comma-separated list:
 - uses: carlory/github-workflow-as-kube@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    plugins: 'dog,help,hold,pony,size,yuks'
+    plugins: 'dog,help,hold,pony,shrug,size,yuks'
 ```

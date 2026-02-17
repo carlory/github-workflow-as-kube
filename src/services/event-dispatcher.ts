@@ -11,6 +11,7 @@ import { dogPlugin } from '../plugins/dog/dog.js'
 import { helpPlugin } from '../plugins/help/help.js'
 import { holdPlugin } from '../plugins/hold/hold.js'
 import { ponyPlugin } from '../plugins/pony/pony.js'
+import { shrugPlugin } from '../plugins/shrug/shrug.js'
 import { sizePlugin } from '../plugins/size/size.js'
 import { yuksPlugin } from '../plugins/yuks/yuks.js'
 import { Logger } from '../utils/logger.js'
@@ -51,6 +52,7 @@ export class EventDispatcher {
       helpPlugin,
       holdPlugin,
       ponyPlugin,
+      shrugPlugin,
       sizePlugin,
       yuksPlugin
     ]
