@@ -552,7 +552,7 @@ describe('Cat Plugin', () => {
       // Mock HEAD request showing large file
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '10000000']]) // 10MB
+        headers: new Headers([['content-length', '10000000']]) // 10MB
       } as Response)
 
       // Second attempt
