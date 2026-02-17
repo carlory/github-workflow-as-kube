@@ -23,17 +23,17 @@ const mockGetOctokit = jest.fn(() => ({
 }))
 
 const mockLoggerInfo = jest.fn()
-const mockLoggerWarn = jest.fn()
+const mockLoggerWarning = jest.fn()
 const mockLoggerError = jest.fn()
 
 jest.unstable_mockModule('@actions/github', () => ({
   getOctokit: mockGetOctokit
 }))
 
-jest.unstable_mockModule('../../src/utils/logger.js', () => ({
+jest.unstable_mockModule('../src/utils/logger.js', () => ({
   Logger: jest.fn().mockImplementation(() => ({
     info: mockLoggerInfo,
-    warn: mockLoggerWarn,
+    warning: mockLoggerWarning,
     error: mockLoggerError,
     debug: jest.fn()
   }))
@@ -70,7 +70,7 @@ describe('Size Plugin', () => {
     mockAddLabels.mockClear()
     mockRemoveLabel.mockClear()
     mockLoggerInfo.mockClear()
-    mockLoggerWarn.mockClear()
+    mockLoggerWarning.mockClear()
     mockLoggerError.mockClear()
   })
 
@@ -118,7 +118,7 @@ describe('Size Plugin', () => {
       mockListFiles.mockResolvedValue({
         data: [
           { additions: 5, deletions: 2, filename: 'file1.ts' },
-          { additions: 3, deletions: 1, filename: 'file2.ts' }
+          { additions: 1, deletions: 0, filename: 'file2.ts' }
         ]
       })
 
@@ -137,7 +137,7 @@ describe('Size Plugin', () => {
         labels: ['size/XS']
       })
       expect(agent.getOutputs()['size_label']).toBe('size/XS')
-      expect(agent.getOutputs()['size_lines']).toBe('11')
+      expect(agent.getOutputs()['size_lines']).toBe('8')
     })
 
     it('should process PR when synchronized', async () => {
@@ -674,7 +674,7 @@ describe('Size Plugin', () => {
       expect(result.success).toBe(true)
       expect(result.tookAction).toBe(true)
       expect(mockAddLabels).toHaveBeenCalled()
-      expect(mockLoggerWarn).toHaveBeenCalled()
+      expect(mockLoggerWarning).toHaveBeenCalled()
     })
 
     it('should handle multiple files', async () => {
