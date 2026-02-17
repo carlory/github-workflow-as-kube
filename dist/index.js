@@ -43759,7 +43759,7 @@ const genericCommentHandler$6 = async (payload, context, agent) => {
                 !GRUMPY_KEYWORDS_REGEX.test(category) &&
                 lastError?.message.includes('Bad request')) {
                 errorMsg =
-                    'Bad category. Please see https://api.thecatapi.com/api/categories/list';
+                    'Invalid category. Please see https://docs.thecatapi.com for valid categories.';
             }
             await octokit.rest.issues.createComment({
                 owner,

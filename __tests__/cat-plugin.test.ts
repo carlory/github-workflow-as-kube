@@ -149,13 +149,13 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/cat.jpg' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request for size check
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '1000']])
+        headers: new Headers([['content-length', '1000']])
       } as Response)
 
       const result = await catPlugin.handlers.genericComment!(
@@ -197,13 +197,13 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/cat-caturday.jpg' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request for size check
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '1000']])
+        headers: new Headers([['content-length', '1000']])
       } as Response)
 
       const result = await catPlugin.handlers.genericComment!(
@@ -239,13 +239,13 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/cat.gif' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request for size check
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '1000']])
+        headers: new Headers([['content-length', '1000']])
       } as Response)
 
       const result = await catPlugin.handlers.genericComment!(
@@ -349,13 +349,13 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/cat.jpg' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request for size check
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '1000']])
+        headers: new Headers([['content-length', '1000']])
       } as Response)
 
       const result = await catPlugin.handlers.genericComment!(
@@ -399,13 +399,13 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/cat.jpg' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request for size check
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '1000']])
+        headers: new Headers([['content-length', '1000']])
       } as Response)
 
       const result = await catPlugin.handlers.genericComment!(
@@ -546,7 +546,7 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/large-cat.jpg' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request showing large file
@@ -559,13 +559,13 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/cat.jpg' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request for size check (small enough)
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '1000']])
+        headers: new Headers([['content-length', '1000']])
       } as Response)
 
       const result = await catPlugin.handlers.genericComment!(
@@ -602,13 +602,13 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/cat.jpg' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request for size check
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '1000']])
+        headers: new Headers([['content-length', '1000']])
       } as Response)
 
       const result = await catPlugin.handlers.genericComment!(
@@ -651,13 +651,13 @@ describe('Cat Plugin', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [{ url: 'https://example.com/cat.jpg' }],
-        headers: new Map()
+        headers: new Headers()
       } as Response)
 
       // Mock HEAD request for size check
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        headers: new Map([['content-length', '1000']])
+        headers: new Headers([['content-length', '1000']])
       } as Response)
 
       await catPlugin.handlers.genericComment!(payload, context, agent)
