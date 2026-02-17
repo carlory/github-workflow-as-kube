@@ -11,6 +11,7 @@ import { dogPlugin } from '../plugins/dog/dog.js'
 import { helpPlugin } from '../plugins/help/help.js'
 import { holdPlugin } from '../plugins/hold/hold.js'
 import { ponyPlugin } from '../plugins/pony/pony.js'
+import { sizePlugin } from '../plugins/size/size.js'
 import { yuksPlugin } from '../plugins/yuks/yuks.js'
 import { Logger } from '../utils/logger.js'
 import { EventValidator } from '../utils/validator.js'
@@ -45,7 +46,14 @@ export class EventDispatcher {
   }
 
   private registerBuiltInPlugins(enabledPlugins: string[]): void {
-    const plugins = [dogPlugin, helpPlugin, holdPlugin, ponyPlugin, yuksPlugin]
+    const plugins = [
+      dogPlugin,
+      helpPlugin,
+      holdPlugin,
+      ponyPlugin,
+      sizePlugin,
+      yuksPlugin
+    ]
 
     for (const plugin of plugins) {
       if (enabledPlugins.includes(plugin.name)) {
