@@ -44404,7 +44404,8 @@ const ponyPlugin = {
  */
 const JOKE_API_URL = 'https://icanhazdadjoke.com';
 const JOKE_REGEX = /^\/joke\s*$/im;
-const SIMPLE_REGEX = /^[\w?'!., ]+$/;
+// Regex to match simple/safe characters that don't need markdown escaping
+const SAFE_MARKDOWN_CHARS_REGEX = /^[\w?'!., ]+$/;
 /**
  * Escapes markdown syntax in a string by converting special characters
  * to numeric character references
@@ -44413,7 +44414,7 @@ function escapeMarkdown(s) {
     let result = '';
     for (let i = 0; i < s.length; i++) {
         const char = s[i];
-        if (SIMPLE_REGEX.test(char)) {
+        if (SAFE_MARKDOWN_CHARS_REGEX.test(char)) {
             result += char;
         }
         else {
@@ -44478,21 +44479,21 @@ const genericCommentHandler = async (payload, context, agent) => {
         if (!issueNumber) {
             throw new Error('No issue or pull request number found');
         }
-        const errorBudget = 5;
+        const maxRetries = 5;
         let joke = null;
-        for (let attempt = 1; attempt <= errorBudget; attempt++) {
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
             try {
                 joke = await fetchJoke();
                 if (joke && joke.length > 0) {
                     break;
                 }
-                logger.info(`Joke is empty. Retrying (attempt ${attempt}/${errorBudget})`);
+                logger.info(`Joke is empty. Retrying (attempt ${attempt}/${maxRetries})`);
             }
             catch (error) {
                 const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-                logger.info(`Failed to get joke: ${errorMessage}. Retrying (attempt ${attempt}/${errorBudget})`);
-                if (attempt === errorBudget) {
-                    throw new Error(`Failed to get joke after ${errorBudget} attempts`);
+                logger.info(`Failed to get joke: ${errorMessage}. Retrying (attempt ${attempt}/${maxRetries})`);
+                if (attempt === maxRetries) {
+                    throw new Error(`Failed to get joke after ${maxRetries} attempts`);
                 }
             }
         }
