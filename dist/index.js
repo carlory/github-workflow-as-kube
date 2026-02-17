@@ -44229,7 +44229,9 @@ async function checkImageSize(url) {
         const contentLength = response.headers.get('content-length');
         if (contentLength) {
             const size = parseInt(contentLength, 10);
-            return size <= MAX_IMAGE_SIZE;
+            if (size > MAX_IMAGE_SIZE) {
+                return false;
+            }
         }
         return true;
     }
@@ -44237,7 +44239,7 @@ async function checkImageSize(url) {
         return true;
     }
 }
-async function fetchPonyImage(tags, retries = 5) {
+async function fetchPonyImage(tags, logger, retries = 5) {
     const queryParam = tags ? `?q=${encodeURIComponent(tags)}` : '';
     const url = `${PONY_API_URL}${queryParam}`;
     for (let i = 0; i < retries; i++) {
@@ -44252,6 +44254,9 @@ async function fetchPonyImage(tags, retries = 5) {
             const sizeOk = await checkImageSize(smallImageUrl);
             if (sizeOk) {
                 return formatPonyURLs(smallImageUrl, fullImageUrl);
+            }
+            else {
+                logger.error(`Pony image too large, retrying (attempt ${i + 1}/${retries})`);
             }
         }
         catch (error) {
@@ -44313,15 +44318,12 @@ const genericCommentHandler = async (payload, context, agent) => {
             if (tags) {
                 tagsSpecified = true;
             }
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const ponyMarkdown = await fetchPonyImage(tags);
-                    responseBuilder += ponyMarkdown + '\n';
-                    break;
-                }
-                catch (error) {
-                    logger.error(`Failed to get pony (attempt ${i + 1}/5): ${error instanceof Error ? error.message : 'Unknown error'}`);
-                }
+            try {
+                const ponyMarkdown = await fetchPonyImage(tags, logger);
+                responseBuilder += ponyMarkdown + '\n';
+            }
+            catch (error) {
+                logger.error(`Failed to get pony: ${error instanceof Error ? error.message : 'Unknown error'}`);
             }
         }
         if (responseBuilder.length > 0) {
@@ -44347,7 +44349,8 @@ const genericCommentHandler = async (payload, context, agent) => {
             errorMsg = "Couldn't find a pony matching given tag(s).";
         }
         else {
-            errorMsg = 'https://theponyapi.com appears to be down';
+            errorMsg =
+                'Failed to fetch pony image. The API may be temporarily unavailable.';
         }
         const errorBody = formatResponseRaw(errorMsg, body, author);
         await octokit.rest.issues.createComment({

@@ -128,7 +128,7 @@ describe('Pony Plugin', () => {
         })
         .mockResolvedValueOnce({
           ok: true,
-          headers: new Map([['content-length', '1000']])
+          headers: new Headers([['content-length', '1000']])
         })
 
       mockCreateComment.mockResolvedValue({})
@@ -177,7 +177,7 @@ describe('Pony Plugin', () => {
         })
         .mockResolvedValueOnce({
           ok: true,
-          headers: new Map([['content-length', '2000']])
+          headers: new Headers([['content-length', '2000']])
         })
 
       mockCreateComment.mockResolvedValue({})
@@ -225,7 +225,7 @@ describe('Pony Plugin', () => {
         })
         .mockResolvedValueOnce({
           ok: true,
-          headers: new Map([['content-length', '1000']])
+          headers: new Headers([['content-length', '1000']])
         })
         .mockResolvedValueOnce({
           ok: true,
@@ -240,7 +240,7 @@ describe('Pony Plugin', () => {
         })
         .mockResolvedValueOnce({
           ok: true,
-          headers: new Map([['content-length', '2000']])
+          headers: new Headers([['content-length', '2000']])
         })
 
       mockCreateComment.mockResolvedValue({})
@@ -361,7 +361,9 @@ describe('Pony Plugin', () => {
       expect(result.tookAction).toBe(true)
       expect(mockCreateComment).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: expect.stringContaining('theponyapi.com appears to be down')
+          body: expect.stringContaining(
+            'Failed to fetch pony image. The API may be temporarily unavailable.'
+          )
         })
       )
     })
@@ -429,7 +431,7 @@ describe('Pony Plugin', () => {
         })
         .mockResolvedValueOnce({
           ok: true,
-          headers: new Map([['content-length', '10000000']])
+          headers: new Headers([['content-length', '10000000']])
         })
 
       await ponyPlugin.handlers.genericComment!(payload, context, agent)
@@ -469,7 +471,7 @@ describe('Pony Plugin', () => {
         })
         .mockResolvedValueOnce({
           ok: true,
-          headers: new Map([['content-length', '1000']])
+          headers: new Headers([['content-length', '1000']])
         })
 
       mockCreateComment.mockResolvedValue({})
