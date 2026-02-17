@@ -309,7 +309,51 @@ licensed status
 This action includes a plugin architecture that supports multiple plugins. The
 following plugins are available:
 
-### Help Plugin
+### Cat Plugin
+
+The cat plugin responds to cat-related commands with images from
+[thecatapi.com](https://thecatapi.com), similar to the
+[Prow cat plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/cat/cat.go).
+
+**Commands:**
+
+- `/meow` - Posts a random cat image
+- `/meow [category]` - Posts a cat image from a specific category (e.g.,
+  `/meow caturday`)
+- `/meowvie` - Posts a random cat GIF
+- `/meowvie [category]` - Posts a cat GIF from a specific category (e.g.,
+  `/meowvie clothes`)
+- `/meow grumpy` or `/meow no` - Posts the famous Grumpy Cat image
+
+**Features:**
+
+- Fetches cat images from thecatapi.com
+- Supports optional category parameter for specific types of cats
+- Supports GIFs with the `/meowvie` command
+- Automatically validates image size
+- Retries up to 3 times on API failures
+- Works with both issues and pull requests
+- Provides helpful error messages when cats can't be found
+
+**Example Usage:**
+
+```yaml
+name: Cat Commands
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  cat-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'cat'
+```
+
+### Dog Plugin
 
 The help plugin manages `help wanted` and `good first issue` labels on issues
 and pull requests, similar to the
@@ -579,5 +623,5 @@ You can enable multiple plugins by providing a comma-separated list:
 - uses: carlory/github-workflow-as-kube@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    plugins: 'dog,help,hold,pony,shrug,size,yuks'
+    plugins: 'cat,dog,help,hold,pony,shrug,size,yuks'
 ```
