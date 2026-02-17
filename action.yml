@@ -14,7 +14,7 @@ inputs:
   plugins:
     description: Comma-separated list of plugins to enable
     required: false
-    default: 'dog,help,yuks'
+    default: 'dog,help,pony,yuks'
 
 outputs:
   event_name:
