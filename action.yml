@@ -14,7 +14,7 @@ inputs:
   plugins:
     description: Comma-separated list of plugins to enable
     required: false
-    default: 'dog,help,pony,yuks'
+    default: 'dog,help,pony,size,yuks'
 
 outputs:
   event_name:
@@ -39,6 +39,10 @@ outputs:
     description: The hold action taken (hold-added, hold-removed)
   joke_posted:
     description: Whether a joke was posted
+  size_label:
+    description: The size label assigned to a pull request
+  size_lines:
+    description: Number of lines changed in a pull request
 
 runs:
   using: node24
