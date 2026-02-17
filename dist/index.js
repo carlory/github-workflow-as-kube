@@ -43626,7 +43626,7 @@ const FINE_IMAGES_ROOT = 'https://raw.githubusercontent.com/carlory/github-workf
 const FINE_IMG = 'this_is_fine.png';
 const NOT_FINE_IMG = 'this_is_not_fine.png';
 const UNBEARABLE_IMG = 'this_is_unbearable.png';
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const MAX_IMAGE_SIZE$1 = 5 * 1024 * 1024;
 const WOOF_REGEX = /^\/(woof|bark)\s*$/i;
 const FINE_REGEX = /^\/this-is-fine\s*$/i;
 const NOT_FINE_REGEX = /^\/this-is-not-fine\s*$/i;
@@ -43644,7 +43644,7 @@ async function fetchDogImage(retries = 5) {
             if (!FILETYPES_REGEX.test(url)) {
                 continue;
             }
-            const sizeOk = await checkImageSize(url);
+            const sizeOk = await checkImageSize$1(url);
             if (sizeOk) {
                 return url;
             }
@@ -43657,13 +43657,13 @@ async function fetchDogImage(retries = 5) {
     }
     throw new Error('Failed to fetch valid dog image after retries');
 }
-async function checkImageSize(url) {
+async function checkImageSize$1(url) {
     try {
         const response = await fetch(url, { method: 'HEAD' });
         const contentLength = response.headers.get('content-length');
         if (contentLength) {
             const size = parseInt(contentLength, 10);
-            return size <= MAX_IMAGE_SIZE;
+            return size <= MAX_IMAGE_SIZE$1;
         }
         return true;
     }
@@ -43683,7 +43683,7 @@ function formatImageURL(imageType, url) {
             return url || '';
     }
 }
-function formatResponseRaw$1(imageURL, originalComment, author) {
+function formatResponseRaw$2(imageURL, originalComment, author) {
     return `![dog](${imageURL})
 
 <details>
@@ -43693,7 +43693,7 @@ ${originalComment}
 
 </details>`;
 }
-const genericCommentHandler$2 = async (payload, context, agent) => {
+const genericCommentHandler$3 = async (payload, context, agent) => {
     const logger = new Logger(context.eventName, context.eventGUID, 'dog');
     try {
         const comment = payload.comment;
@@ -43744,7 +43744,7 @@ const genericCommentHandler$2 = async (payload, context, agent) => {
         if (!issueNumber) {
             throw new Error('No issue or pull request number found');
         }
-        const responseBody = formatResponseRaw$1(imageURL, body, author);
+        const responseBody = formatResponseRaw$2(imageURL, body, author);
         await octokit.rest.issues.createComment({
             owner,
             repo,
@@ -43775,7 +43775,7 @@ const genericCommentHandler$2 = async (payload, context, agent) => {
 const dogPlugin = {
     name: 'dog',
     handlers: {
-        genericComment: genericCommentHandler$2
+        genericComment: genericCommentHandler$3
     },
     help: {
         description: 'Posts dog images in response to commands',
@@ -43843,7 +43843,7 @@ If this request no longer meets these requirements, the label can be removed
 by commenting with the \`/remove-good-first-issue\` command.
 `;
 }
-function formatResponseRaw(body, htmlURL, author, message) {
+function formatResponseRaw$1(body, htmlURL, author, message) {
     return `${message}
 
 <details>
@@ -43877,7 +43877,7 @@ async function pruneComments(octokit, owner, repo, issueNumber, botLogin, pruneM
         logger.error(`Failed to prune comments: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
 }
-const genericCommentHandler$1 = async (payload, context, agent) => {
+const genericCommentHandler$2 = async (payload, context, agent) => {
     const logger = new Logger(context.eventName, context.eventGUID, 'help');
     try {
         const comment = payload.comment;
@@ -43947,7 +43947,7 @@ const genericCommentHandler$1 = async (payload, context, agent) => {
         }
         if (!hasGoodFirstIssue && helpGoodFirstIssueRe.test(body)) {
             const message = goodFirstIssueMsg();
-            const responseBody = formatResponseRaw(body, htmlURL, author, message);
+            const responseBody = formatResponseRaw$1(body, htmlURL, author, message);
             await octokit.rest.issues.createComment({
                 owner,
                 repo,
@@ -43982,7 +43982,7 @@ const genericCommentHandler$1 = async (payload, context, agent) => {
         }
         if (!hasHelp && helpRe.test(body)) {
             const message = helpMsg();
-            const responseBody = formatResponseRaw(body, htmlURL, author, message);
+            const responseBody = formatResponseRaw$1(body, htmlURL, author, message);
             await octokit.rest.issues.createComment({
                 owner,
                 repo,
@@ -44043,7 +44043,7 @@ const genericCommentHandler$1 = async (payload, context, agent) => {
 const helpPlugin = {
     name: 'help',
     handlers: {
-        genericComment: genericCommentHandler$1
+        genericComment: genericCommentHandler$2
     },
     help: {
         description: "Adds or removes the 'help wanted' and 'good first issue' labels from issues.",
@@ -44079,7 +44079,7 @@ const helpPlugin = {
 const HOLD_LABEL = 'do-not-merge/hold';
 const holdRe = /^\/hold(\s.*)?$/im;
 const holdCancelRe = /^\/(remove-hold|hold\s+cancel|unhold)(\s.*)?$/im;
-const genericCommentHandler = async (payload, context, agent) => {
+const genericCommentHandler$1 = async (payload, context, agent) => {
     const logger = new Logger(context.eventName, context.eventGUID, 'hold');
     try {
         const comment = payload.comment;
@@ -44187,7 +44187,7 @@ const genericCommentHandler = async (payload, context, agent) => {
 const holdPlugin = {
     name: 'hold',
     handlers: {
-        genericComment: genericCommentHandler
+        genericComment: genericCommentHandler$1
     },
     help: {
         description: "Adds or removes the 'do-not-merge/hold' label from pull requests to temporarily prevent merging without withholding approval.",
@@ -44211,6 +44211,189 @@ const holdPlugin = {
                 name: '/remove-hold',
                 description: "Removes the 'do-not-merge/hold' label from a PR (alias for /hold cancel)",
                 example: '/remove-hold'
+            }
+        ]
+    }
+};
+
+/**
+ * Pony plugin - Responds to pony commands with images from theponyapi.com
+ */
+const PONY_API_URL = 'https://theponyapi.com/api/v1/pony/random';
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const MAX_PONIES = 5;
+const PONY_REGEX = /^\/pony(?: +([^\r\n]+))?\s*$/gim;
+async function checkImageSize(url) {
+    try {
+        const response = await fetch(url, { method: 'HEAD' });
+        const contentLength = response.headers.get('content-length');
+        if (contentLength) {
+            const size = parseInt(contentLength, 10);
+            if (size > MAX_IMAGE_SIZE) {
+                return false;
+            }
+        }
+        return true;
+    }
+    catch {
+        return true;
+    }
+}
+async function fetchPonyImage(tags, logger, retries = 5) {
+    const queryParam = tags ? `?q=${encodeURIComponent(tags)}` : '';
+    const url = `${PONY_API_URL}${queryParam}`;
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = (await response.json());
+            const smallImageUrl = data.pony.representations.small;
+            const fullImageUrl = data.pony.representations.full;
+            const sizeOk = await checkImageSize(smallImageUrl);
+            if (sizeOk) {
+                return formatPonyURLs(smallImageUrl, fullImageUrl);
+            }
+            else {
+                logger.error(`Pony image too large, retrying (attempt ${i + 1}/${retries})`);
+            }
+        }
+        catch (error) {
+            if (i === retries - 1) {
+                throw error;
+            }
+        }
+    }
+    throw new Error('Failed to fetch valid pony image after retries');
+}
+function formatPonyURLs(small, full) {
+    return `[![pony image](${small})](${full})`;
+}
+function formatResponseRaw(ponyMarkdown, originalComment, author) {
+    return `${ponyMarkdown}
+
+<details>
+<summary>Original comment by @${author}</summary>
+
+${originalComment}
+
+</details>`;
+}
+const genericCommentHandler = async (payload, context, agent) => {
+    const logger = new Logger(context.eventName, context.eventGUID, 'pony');
+    try {
+        const comment = payload.comment;
+        if (!comment || !comment.body) {
+            return {
+                success: true,
+                tookAction: false
+            };
+        }
+        const body = comment.body;
+        const author = comment.user.login;
+        const matches = body.matchAll(PONY_REGEX);
+        const matchArray = Array.from(matches).slice(0, MAX_PONIES);
+        if (matchArray.length === 0) {
+            return {
+                success: true,
+                tookAction: false
+            };
+        }
+        logger.info(`Pony command detected, found ${matchArray.length} request(s)`);
+        const token = process.env.GITHUB_TOKEN;
+        if (!token) {
+            throw new Error('GITHUB_TOKEN not found');
+        }
+        const octokit = getOctokit(token);
+        const [owner, repo] = payload.repository.full_name.split('/');
+        const issueNumber = payload.issue?.number || payload.pull_request?.number;
+        if (!issueNumber) {
+            throw new Error('No issue or pull request number found');
+        }
+        let responseBuilder = '';
+        let tagsSpecified = false;
+        for (const match of matchArray) {
+            const tags = match[1] ? match[1].trim() : '';
+            if (tags) {
+                tagsSpecified = true;
+            }
+            try {
+                const ponyMarkdown = await fetchPonyImage(tags, logger);
+                responseBuilder += ponyMarkdown + '\n';
+            }
+            catch (error) {
+                logger.error(`Failed to get pony: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            }
+        }
+        if (responseBuilder.length > 0) {
+            const responseBody = formatResponseRaw(responseBuilder, body, author);
+            await octokit.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issueNumber,
+                body: responseBody
+            });
+            logger.info(`Posted pony image(s) to #${issueNumber}`);
+            agent.tookAction();
+            agent.setOutput('pony_posted', 'true');
+            agent.setOutput('issue_number', issueNumber.toString());
+            return {
+                success: true,
+                tookAction: true,
+                message: `Posted pony image(s) to #${issueNumber}`
+            };
+        }
+        let errorMsg = '';
+        if (tagsSpecified) {
+            errorMsg = 'Could not find a pony matching given tag(s).';
+        }
+        else {
+            errorMsg =
+                'Failed to fetch pony image. The API may be temporarily unavailable.';
+        }
+        const errorBody = formatResponseRaw(errorMsg, body, author);
+        await octokit.rest.issues.createComment({
+            owner,
+            repo,
+            issue_number: issueNumber,
+            body: errorBody
+        });
+        logger.error('Could not find a valid pony image');
+        return {
+            success: false,
+            tookAction: true,
+            message: 'Could not find a valid pony image'
+        };
+    }
+    catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        logger.error(`Pony plugin error: ${errorMessage}`);
+        agent.setFailed(errorMessage);
+        return {
+            success: false,
+            tookAction: false,
+            message: errorMessage
+        };
+    }
+};
+const ponyPlugin = {
+    name: 'pony',
+    handlers: {
+        genericComment: genericCommentHandler
+    },
+    help: {
+        description: 'Posts pony images from theponyapi.com in response to commands',
+        commands: [
+            {
+                name: '/pony',
+                description: 'Posts a random pony image. You can optionally specify a pony name or tag for a specific pony.',
+                example: '/pony'
+            },
+            {
+                name: '/pony [name]',
+                description: 'Posts an image of a specific pony by name',
+                example: '/pony Twilight Sparkle'
             }
         ]
     }
@@ -44279,7 +44462,7 @@ class EventDispatcher {
         };
     }
     registerBuiltInPlugins(enabledPlugins) {
-        const plugins = [dogPlugin, helpPlugin, holdPlugin];
+        const plugins = [dogPlugin, helpPlugin, holdPlugin, ponyPlugin];
         for (const plugin of plugins) {
             if (enabledPlugins.includes(plugin.name)) {
                 plugin.config = { enabled: true };
