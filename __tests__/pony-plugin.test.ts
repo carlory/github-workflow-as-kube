@@ -432,11 +432,7 @@ describe('Pony Plugin', () => {
           headers: new Map([['content-length', '10000000']])
         })
 
-      const result = await ponyPlugin.handlers.genericComment!(
-        payload,
-        context,
-        agent
-      )
+      await ponyPlugin.handlers.genericComment!(payload, context, agent)
 
       expect(mockFetch).toHaveBeenCalled()
     })
