@@ -43635,9 +43635,13 @@ async function checkImageSize$2(url) {
             const size = parseInt(contentLength, 10);
             return size <= MAX_IMAGE_SIZE$2;
         }
+        // If no content-length header, assume it's OK
+        // (some servers don't provide this header)
         return true;
     }
-    catch {
+    catch (error) {
+        // Log the error but allow the image (better user experience)
+        // The actual image fetch will fail if there's a real issue
         return true;
     }
 }
@@ -43656,7 +43660,11 @@ async function fetchCatImage(category, movieCat, grumpyRoot) {
     }
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Provide more specific error for 4xx vs 5xx
+        if (response.status >= 400 && response.status < 500) {
+            throw new Error(`Bad request (status ${response.status})`);
+        }
+        throw new Error(`API error (status ${response.status})`);
     }
     const data = (await response.json());
     if (!data || data.length === 0) {
@@ -43746,7 +43754,10 @@ const genericCommentHandler$6 = async (payload, context, agent) => {
         // If we couldn't get a cat image after 3 tries, post an error message
         if (!imageURL) {
             let errorMsg = 'The cat API (thecatapi.com) is currently unavailable. Please try again later.';
-            if (category && !GRUMPY_KEYWORDS_REGEX.test(category)) {
+            // If the last error indicates a bad request and there was a category, it's likely a bad category
+            if (category &&
+                !GRUMPY_KEYWORDS_REGEX.test(category) &&
+                lastError?.message.includes('Bad request')) {
                 errorMsg =
                     'Bad category. Please see https://api.thecatapi.com/api/categories/list';
             }
