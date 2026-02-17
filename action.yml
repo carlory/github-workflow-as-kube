@@ -14,7 +14,7 @@ inputs:
   plugins:
     description: Comma-separated list of plugins to enable
     required: false
-    default: 'dog,help'
+    default: 'dog,help,pony,yuks'
 
 outputs:
   event_name:
@@ -37,6 +37,8 @@ outputs:
       good-first-issue-removed)
   hold_action:
     description: The hold action taken (hold-added, hold-removed)
+  joke_posted:
+    description: Whether a joke was posted
 
 runs:
   using: node24
