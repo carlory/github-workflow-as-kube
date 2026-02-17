@@ -417,6 +417,48 @@ jobs:
           plugins: 'hold'
 ```
 
+### Size Plugin
+
+The size plugin automatically labels pull requests based on the number of lines
+changed, similar to the
+[Prow size plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/size/size.go).
+
+**Features:**
+
+- Automatically calculates the total lines changed (additions + deletions) in a
+  pull request
+- Applies appropriate size labels based on configurable thresholds
+- Removes old size labels when PR size changes
+- Works automatically on PR events (opened, synchronized, reopened, edited)
+- No commands needed - fully automatic
+
+**Size Categories:**
+
+- `size/XS` - 0-9 lines changed
+- `size/S` - 10-29 lines changed
+- `size/M` - 30-99 lines changed
+- `size/L` - 100-499 lines changed
+- `size/XL` - 500-999 lines changed
+- `size/XXL` - 1000+ lines changed
+
+**Example Usage:**
+
+```yaml
+name: Label PR by Size
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  size-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'size'
+```
+
 ### Pony Plugin
 
 The pony plugin responds to pony commands with images from
@@ -499,5 +541,5 @@ You can enable multiple plugins by providing a comma-separated list:
 - uses: carlory/github-workflow-as-kube@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    plugins: 'dog,help,hold,pony,yuks'
+    plugins: 'dog,help,hold,pony,size,yuks'
 ```
