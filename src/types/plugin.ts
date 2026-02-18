@@ -5,6 +5,7 @@
 import type {
   GitHubEventPayload,
   IssueEventPayload,
+  IssueCommentEventPayload,
   PullRequestEventPayload,
   PushEventPayload,
   ReviewEventPayload,
@@ -32,16 +33,7 @@ export type IssueHandler = (
 ) => Promise<HandlerResult>
 
 export type IssueCommentHandler = (
-  payload: IssueEventPayload & {
-    comment: {
-      id: number
-      body: string
-      user: {
-        login: string
-      }
-      html_url: string
-    }
-  },
+  payload: IssueCommentEventPayload,
   context: EventContext,
   agent: PluginAgent
 ) => Promise<HandlerResult>
@@ -71,42 +63,7 @@ export type StatusEventHandler = (
 ) => Promise<HandlerResult>
 
 export type GenericCommentHandler = (
-  payload: GitHubEventPayload & {
-    comment?: {
-      id: number
-      body: string
-      user: {
-        login: string
-      }
-      html_url: string
-    }
-    issue?: {
-      number: number
-      title: string
-      html_url: string
-      state?: string
-    }
-    pull_request?: {
-      number: number
-      title: string
-      html_url: string
-      state?: string
-    }
-    review?: {
-      id: number
-      body?: string
-      user: {
-        login: string
-      }
-    }
-    repository: {
-      name: string
-      owner: {
-        login: string
-      }
-      full_name: string
-    }
-  },
+  payload: GitHubEventPayload,
   context: EventContext,
   agent: PluginAgent
 ) => Promise<HandlerResult>

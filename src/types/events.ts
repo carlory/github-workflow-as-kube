@@ -1,78 +1,52 @@
 /**
  * GitHub event payload type definitions
+ *
+ * Uses official types from @actions/github for accuracy and completeness
  */
 
-export interface GitHubEventPayload {
-  action?: string
-  [key: string]: unknown
+import { context } from '@actions/github'
+
+// Extract WebhookPayload type from context
+type WebhookPayload = typeof context.payload
+
+// Re-export base payload type
+export type GitHubEventPayload = WebhookPayload
+
+// Issue comment event (for comments on issues or pull requests)
+export type IssueCommentEventPayload = WebhookPayload & {
+  action: 'created' | 'edited' | 'deleted'
+  issue: NonNullable<WebhookPayload['issue']>
+  comment: NonNullable<WebhookPayload['comment']>
+  repository: NonNullable<WebhookPayload['repository']>
+  sender: NonNullable<WebhookPayload['sender']>
 }
 
-export interface IssueEventPayload extends GitHubEventPayload {
-  issue: {
-    number: number
-    title: string
-    body?: string
-    state: string
-    user: {
-      login: string
-    }
-    labels: Array<{
-      name: string
-    }>
-    html_url: string
-  }
-  repository: {
-    name: string
-    owner: {
-      login: string
-    }
-    full_name: string
-  }
+// Issue event (for issues that are NOT pull requests)
+export type IssueEventPayload = WebhookPayload & {
+  action: string
+  issue: NonNullable<WebhookPayload['issue']>
+  repository: NonNullable<WebhookPayload['repository']>
+  sender: NonNullable<WebhookPayload['sender']>
 }
 
-export interface PullRequestEventPayload extends GitHubEventPayload {
-  pull_request: {
-    number: number
-    title: string
-    body?: string
-    state: string
-    user: {
-      login: string
-    }
-    head: {
-      ref: string
-      sha: string
-    }
-    base: {
-      ref: string
-      sha: string
-    }
-    html_url: string
-  }
-  repository: {
-    name: string
-    owner: {
-      login: string
-    }
-    full_name: string
-  }
+// Pull request event
+export type PullRequestEventPayload = WebhookPayload & {
+  action: string
+  pull_request: NonNullable<WebhookPayload['pull_request']>
+  repository: NonNullable<WebhookPayload['repository']>
+  sender: NonNullable<WebhookPayload['sender']>
 }
 
-export interface PushEventPayload extends GitHubEventPayload {
+// Push event
+export type PushEventPayload = WebhookPayload & {
   ref: string
   before: string
   after: string
-  repository: {
-    name: string
-    owner: {
-      login: string
-      name?: string
-    }
-    full_name: string
-  }
+  repository: NonNullable<WebhookPayload['repository']>
   pusher: {
     name: string
     email: string
+    [key: string]: any
   }
   commits: Array<{
     id: string
@@ -80,63 +54,39 @@ export interface PushEventPayload extends GitHubEventPayload {
     author: {
       name: string
       email: string
+      [key: string]: any
     }
+    [key: string]: any
   }>
+  sender: NonNullable<WebhookPayload['sender']>
 }
 
-export interface ReleaseEventPayload extends GitHubEventPayload {
-  release: {
-    tag_name: string
-    name: string
-    body?: string
-    draft: boolean
-    prerelease: boolean
-    html_url: string
-  }
-  repository: {
-    name: string
-    owner: {
-      login: string
-    }
-    full_name: string
-  }
-}
-
-export interface ReviewEventPayload extends GitHubEventPayload {
+// Pull request review event
+export type ReviewEventPayload = WebhookPayload & {
+  action: string
   review: {
     id: number
     body?: string
     state: string
     user: {
       login: string
+      [key: string]: any
     }
     html_url: string
+    [key: string]: any
   }
-  pull_request: {
-    number: number
-    title: string
-    html_url: string
-  }
-  repository: {
-    name: string
-    owner: {
-      login: string
-    }
-    full_name: string
-  }
+  pull_request: NonNullable<WebhookPayload['pull_request']>
+  repository: NonNullable<WebhookPayload['repository']>
+  sender: NonNullable<WebhookPayload['sender']>
 }
 
-export interface StatusEventPayload extends GitHubEventPayload {
+// Status event
+export type StatusEventPayload = WebhookPayload & {
   sha: string
   state: string
   description?: string
   target_url?: string
   context: string
-  repository: {
-    name: string
-    owner: {
-      login: string
-    }
-    full_name: string
-  }
+  repository: NonNullable<WebhookPayload['repository']>
+  sender: NonNullable<WebhookPayload['sender']>
 }
