@@ -59,6 +59,35 @@ describe('main.ts', () => {
       'test-owner/test-repo'
     )
     expect(core.setOutput).toHaveBeenCalledWith('plugins_enabled', 'dog')
+
+    // Verify workflow_data output is set with JSON
+    expect(core.setOutput).toHaveBeenCalledWith(
+      'workflow_data',
+      expect.any(String)
+    )
+
+    // Get the workflow_data output and verify it's valid JSON
+    const workflowDataCall = core.setOutput.mock.calls.find(
+      (call) => call[0] === 'workflow_data'
+    )
+    expect(workflowDataCall).toBeDefined()
+
+    const workflowDataJson = workflowDataCall![1]
+    const workflowData = JSON.parse(workflowDataJson as string)
+
+    // Verify the structure of workflow data
+    expect(workflowData).toHaveProperty('context')
+    expect(workflowData).toHaveProperty('payload')
+    expect(workflowData).toHaveProperty('inputs')
+    expect(workflowData).toHaveProperty('environment')
+
+    // Verify context data
+    expect(workflowData.context.eventName).toBe('push')
+    expect(workflowData.context.repository).toBe('test-owner/test-repo')
+
+    // Verify inputs (token should be masked)
+    expect(workflowData.inputs['github-token']).toBe('***')
+    expect(workflowData.inputs.plugins).toBe('dog')
   })
 
   it('Sets a failed status on error', async () => {

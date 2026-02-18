@@ -45202,10 +45202,35 @@ class EventDispatcher {
                 throw new Error('Invalid event payload');
             }
             await this.demuxEvent(payload);
+            // Create workflow data object with all relevant information
+            const workflowData = {
+                context: this.context,
+                payload,
+                inputs: {
+                    'github-token': '***', // Mask the token for security
+                    plugins: pluginsInput
+                },
+                environment: {
+                    GITHUB_WORKFLOW: process.env.GITHUB_WORKFLOW,
+                    GITHUB_RUN_ID: process.env.GITHUB_RUN_ID,
+                    GITHUB_RUN_NUMBER: process.env.GITHUB_RUN_NUMBER,
+                    GITHUB_ACTION: process.env.GITHUB_ACTION,
+                    GITHUB_ACTOR: process.env.GITHUB_ACTOR,
+                    GITHUB_REPOSITORY: process.env.GITHUB_REPOSITORY,
+                    GITHUB_EVENT_NAME: process.env.GITHUB_EVENT_NAME,
+                    GITHUB_SHA: process.env.GITHUB_SHA,
+                    GITHUB_REF: process.env.GITHUB_REF
+                }
+            };
+            // Print workflow data as JSON
+            const workflowDataJson = JSON.stringify(workflowData, null, 2);
+            this.logger.info('Workflow data (JSON format):');
+            console.log(workflowDataJson);
             coreExports.setOutput('event_name', this.context.eventName);
             coreExports.setOutput('event_guid', this.context.eventGUID);
             coreExports.setOutput('repository', this.context.repository);
             coreExports.setOutput('plugins_enabled', enabledPlugins.join(','));
+            coreExports.setOutput('workflow_data', workflowDataJson);
             this.logger.info('Event dispatch completed');
         }
         catch (error) {

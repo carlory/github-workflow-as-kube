@@ -47,6 +47,10 @@ outputs:
     description: The size label assigned to a pull request
   size_lines:
     description: Number of lines changed in a pull request
+  workflow_data:
+    description:
+      Complete workflow data in JSON format (context, payload, inputs,
+      environment)
 
 runs:
   using: node24
