@@ -67,3 +67,5 @@ jobs:
           echo "Event GUID: ${{ steps.test-action.outputs.event_guid }}"
           echo "Repository: ${{ steps.test-action.outputs.repository }}"
           echo "Plugins Enabled: ${{ steps.test-action.outputs.plugins_enabled }}"
+          echo "Workflow Data (JSON):"
+          echo "${{ steps.test-action.outputs.workflow_data }}"

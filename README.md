@@ -625,3 +625,39 @@ You can enable multiple plugins by providing a comma-separated list:
     github-token: ${{ secrets.GITHUB_TOKEN }}
     plugins: 'cat,dog,help,hold,pony,shrug,size,yuks'
 ```
+
+## Workflow Data Output
+
+The action automatically collects and outputs complete workflow data in JSON
+format. This is useful for debugging, logging, and understanding the context in
+which the action is running.
+
+### What's Included
+
+The `workflow_data` output contains:
+
+- **context**: Event context including event name, GUID, repository, SHA,
+  branch/ref, actor, workflow name, run ID, and run number
+- **payload**: The complete GitHub event payload that triggered the workflow
+- **inputs**: Action inputs (with sensitive data like tokens masked)
+- **environment**: Relevant GitHub Actions environment variables
+
+### Usage Example
+
+```yaml
+steps:
+  - name: Run Action
+    id: action
+    uses: carlory/github-workflow-as-kube@v1
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      plugins: 'dog'
+
+  - name: View Workflow Data
+    run: |
+      echo "Workflow Data (JSON):"
+      echo "${{ steps.action.outputs.workflow_data }}"
+```
+
+The workflow data is also printed to the action logs in JSON format for easy
+debugging and visibility.
