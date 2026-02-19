@@ -615,6 +615,58 @@ jobs:
           plugins: 'yuks'
 ```
 
+### WIP Plugin
+
+The WIP (Work In Progress) plugin automatically manages the
+`do-not-merge/work-in-progress` label on pull requests, similar to the
+[Prow WIP plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/wip/wip-label.go).
+
+**Features:**
+
+- Automatically adds the `do-not-merge/work-in-progress` label when:
+  - PR title starts with "WIP" (case-insensitive, with optional non-word prefix
+    like `[WIP]`, `WIP:`, `wip -`, etc.)
+  - PR is marked as draft
+- Automatically removes the label when:
+  - PR title no longer starts with "WIP"
+  - PR is marked as ready for review (not draft)
+- Works automatically on PR events (opened, reopened, edited, ready_for_review,
+  converted_to_draft)
+- No commands needed - fully automatic
+
+**Example Usage:**
+
+```yaml
+name: WIP Label Management
+on:
+  pull_request:
+    types: [opened, reopened, edited, ready_for_review, converted_to_draft]
+
+jobs:
+  wip-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'wip'
+```
+
+**Title Examples:**
+
+The following PR titles will trigger the WIP label:
+
+- `WIP: Add new feature`
+- `[WIP] Fix bug in authentication`
+- `wip - Update documentation`
+- `(WIP) Refactor code`
+
+The following will NOT trigger the WIP label:
+
+- `Add WIP feature` (WIP not at start)
+- `Update WIP status` (WIP not at start)
+- `WIPP: typo` (not exactly "WIP")
+
 ### Multiple Plugins
 
 You can enable multiple plugins by providing a comma-separated list:
@@ -623,7 +675,7 @@ You can enable multiple plugins by providing a comma-separated list:
 - uses: carlory/github-workflow-as-kube@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    plugins: 'cat,dog,help,hold,pony,shrug,size,yuks'
+    plugins: 'cat,dog,help,hold,pony,shrug,size,wip,yuks'
 ```
 
 ## Workflow Data Output

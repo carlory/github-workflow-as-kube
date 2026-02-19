@@ -14,6 +14,7 @@ import { holdPlugin } from '../plugins/hold/hold.js'
 import { ponyPlugin } from '../plugins/pony/pony.js'
 import { shrugPlugin } from '../plugins/shrug/shrug.js'
 import { sizePlugin } from '../plugins/size/size.js'
+import { wipPlugin } from '../plugins/wip/wip.js'
 import { yuksPlugin } from '../plugins/yuks/yuks.js'
 import { Logger } from '../utils/logger.js'
 import { EventValidator } from '../utils/validator.js'
@@ -56,6 +57,7 @@ export class EventDispatcher {
       ponyPlugin,
       shrugPlugin,
       sizePlugin,
+      wipPlugin,
       yuksPlugin
     ]
 
