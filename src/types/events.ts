@@ -46,7 +46,7 @@ export type PushEventPayload = WebhookPayload & {
   pusher: {
     name: string
     email: string
-    [key: string]: any
+    [key: string]: unknown
   }
   commits: Array<{
     id: string
@@ -54,9 +54,9 @@ export type PushEventPayload = WebhookPayload & {
     author: {
       name: string
       email: string
-      [key: string]: any
+      [key: string]: unknown
     }
-    [key: string]: any
+    [key: string]: unknown
   }>
   sender: NonNullable<WebhookPayload['sender']>
 }
@@ -70,10 +70,10 @@ export type ReviewEventPayload = WebhookPayload & {
     state: string
     user: {
       login: string
-      [key: string]: any
+      [key: string]: unknown
     }
     html_url: string
-    [key: string]: any
+    [key: string]: unknown
   }
   pull_request: NonNullable<WebhookPayload['pull_request']>
   repository: NonNullable<WebhookPayload['repository']>
