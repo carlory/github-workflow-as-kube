@@ -43,6 +43,7 @@ async function checkImageSize(url: string): Promise<boolean> {
   } catch (error) {
     // Log the error but allow the image (better user experience)
     // The actual image fetch will fail if there's a real issue
+    console.error(`Failed to check image size for ${url}:`, error)
     return true
   }
 }

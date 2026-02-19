@@ -102,11 +102,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -143,11 +150,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -180,11 +194,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -221,11 +242,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -258,11 +286,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -294,11 +329,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -330,11 +372,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -360,11 +409,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -382,11 +438,18 @@ describe('Hold Plugin', () => {
     it('should handle missing comment', async () => {
       const payload = {
         action: 'created',
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -441,11 +504,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'closed'
+          state: 'closed',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -473,11 +543,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -503,11 +580,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -537,11 +621,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 42,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/42',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/42',
+            html_url: 'https://github.com/test-owner/test-repo/pull/42',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/42.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/42.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -570,11 +661,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -607,11 +705,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -641,11 +746,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',
@@ -675,11 +787,18 @@ describe('Hold Plugin', () => {
           html_url:
             'https://github.com/test-owner/test-repo/issues/1#issuecomment-1'
         },
-        pull_request: {
+        issue: {
           number: 1,
           title: 'Test PR',
           html_url: 'https://github.com/test-owner/test-repo/pull/1',
-          state: 'open'
+          state: 'open',
+          pull_request: {
+            url: 'https://api.github.com/repos/test-owner/test-repo/pulls/1',
+            html_url: 'https://github.com/test-owner/test-repo/pull/1',
+            diff_url: 'https://github.com/test-owner/test-repo/pull/1.diff',
+            patch_url: 'https://github.com/test-owner/test-repo/pull/1.patch',
+            merged_at: null
+          }
         },
         repository: {
           name: 'test-repo',

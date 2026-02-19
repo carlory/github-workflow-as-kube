@@ -34,16 +34,16 @@ const genericCommentHandler: GenericCommentHandler = async (
       }
     }
 
-    // Only process pull requests
-    if (!payload.pull_request) {
+    // Only process pull requests (check issue.pull_request for issue_comment events)
+    if (!payload.issue?.pull_request) {
       return {
         success: true,
         tookAction: false
       }
     }
 
-    const issueNumber = payload.pull_request.number
-    const issueState = payload.pull_request.state
+    const issueNumber = payload.issue.number
+    const issueState = payload.issue.state
 
     // Only process open PRs
     if (issueState !== 'open') {

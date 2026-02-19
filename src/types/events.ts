@@ -20,6 +20,13 @@ export interface IssueEventPayload extends GitHubEventPayload {
       name: string
     }>
     html_url: string
+    pull_request?: {
+      url: string
+      html_url: string
+      diff_url: string
+      patch_url: string
+      merged_at: string | null
+    }
   }
   repository: {
     name: string

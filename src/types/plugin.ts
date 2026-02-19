@@ -85,6 +85,13 @@ export type GenericCommentHandler = (
       title: string
       html_url: string
       state?: string
+      pull_request?: {
+        url: string
+        html_url: string
+        diff_url: string
+        patch_url: string
+        merged_at: string | null
+      }
     }
     pull_request?: {
       number: number

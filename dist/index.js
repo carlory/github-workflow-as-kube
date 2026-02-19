@@ -43642,6 +43642,7 @@ async function checkImageSize$2(url) {
     catch (error) {
         // Log the error but allow the image (better user experience)
         // The actual image fetch will fail if there's a real issue
+        console.error(`Failed to check image size for ${url}:`, error);
         return true;
     }
 }
@@ -44300,15 +44301,15 @@ const genericCommentHandler$3 = async (payload, context, agent) => {
                 tookAction: false
             };
         }
-        // Only process pull requests
-        if (!payload.pull_request) {
+        // Only process pull requests (check issue.pull_request for issue_comment events)
+        if (!payload.issue?.pull_request) {
             return {
                 success: true,
                 tookAction: false
             };
         }
-        const issueNumber = payload.pull_request.number;
-        const issueState = payload.pull_request.state;
+        const issueNumber = payload.issue.number;
+        const issueState = payload.issue.state;
         // Only process open PRs
         if (issueState !== 'open') {
             return {
