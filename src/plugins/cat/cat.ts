@@ -18,7 +18,7 @@ const DEFAULT_GRUMPY_ROOT =
 const GRUMPY_IMG = 'Grumpy_Cat_by_Gage_Skidmore.jpg'
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024
 
-const MEOW_REGEX = /^\/meow(vie)?(?: (.+))?\s*$/im
+const MEOW_REGEX = /^\/meow(via)?(?: (.+))?\s*$/im
 const GRUMPY_KEYWORDS_REGEX = /^(no|grumpy)\s*$/i
 
 interface CatImageResponse {
@@ -161,7 +161,7 @@ const genericCommentHandler: GenericCommentHandler = async (
 
     // Parse the match groups
     // match[0] is the full match
-    // match[1] is "vie" if present (for movie cats/GIFs)
+    // match[1] is "via" if present (for movie cats/GIFs)
     // match[2] is the category if present
     const movieCat = !!match[1]
     const category = (match[2] || '').trim()
