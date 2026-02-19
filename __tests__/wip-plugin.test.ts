@@ -902,11 +902,7 @@ describe('WIP Plugin', () => {
         const result = await handler(payload, context, agent)
 
         expect(result.success).toBe(true)
-        if (shouldMatch) {
-          expect(mockAddLabels).toHaveBeenCalled()
-        } else {
-          expect(mockAddLabels).not.toHaveBeenCalled()
-        }
+        expect(mockAddLabels).toHaveBeenCalledTimes(shouldMatch ? 1 : 0)
       })
     })
   })
