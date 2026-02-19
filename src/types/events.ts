@@ -43,6 +43,7 @@ export interface PullRequestEventPayload extends GitHubEventPayload {
     title: string
     body?: string
     state: string
+    draft?: boolean
     user: {
       login: string
     }
