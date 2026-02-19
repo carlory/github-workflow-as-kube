@@ -615,6 +615,47 @@ jobs:
           plugins: 'yuks'
 ```
 
+### Stage Plugin
+
+The stage plugin labels the stage of an issue as alpha/beta/stable, similar to
+the
+[Prow stage plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/stage/stage.go).
+
+**Commands:**
+
+- `/stage alpha` - Applies the `stage/alpha` label to an issue or pull request
+- `/stage beta` - Applies the `stage/beta` label to an issue or pull request
+- `/stage stable` - Applies the `stage/stable` label to an issue or pull request
+- `/remove-stage alpha` - Removes the `stage/alpha` label
+- `/remove-stage beta` - Removes the `stage/beta` label
+- `/remove-stage stable` - Removes the `stage/stable` label
+
+**Features:**
+
+- Works with both issues and pull requests
+- Only one stage label can be applied at a time (mutual exclusion)
+- Automatically removes other stage labels when a new stage is set
+- Case-insensitive command matching
+- Anyone can use the commands
+
+**Example Usage:**
+
+```yaml
+name: Process Issue Comments
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  stage-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'stage'
+```
+
 ### WIP Plugin
 
 The WIP (Work In Progress) plugin automatically manages the
@@ -675,7 +716,7 @@ You can enable multiple plugins by providing a comma-separated list:
 - uses: carlory/github-workflow-as-kube@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    plugins: 'cat,dog,help,hold,pony,shrug,size,wip,yuks'
+    plugins: 'cat,dog,help,hold,pony,shrug,size,stage,wip,yuks'
 ```
 
 ## Workflow Data Output

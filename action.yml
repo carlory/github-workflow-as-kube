@@ -14,7 +14,7 @@ inputs:
   plugins:
     description: Comma-separated list of plugins to enable
     required: false
-    default: 'cat,dog,help,pony,size,yuks'
+    default: 'cat,dog,help,pony,size,stage,yuks'
 
 outputs:
   event_name:
@@ -41,6 +41,8 @@ outputs:
     description: The hold action taken (hold-added, hold-removed)
   shrug_action:
     description: The shrug action taken (shrug-added, shrug-removed)
+  stage_action:
+    description: The stage action taken (stage-updated)
   joke_posted:
     description: Whether a joke was posted
   size_label:
