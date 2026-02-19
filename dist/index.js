@@ -43625,7 +43625,7 @@ const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search';
 const DEFAULT_GRUMPY_ROOT = 'https://upload.wikimedia.org/wikipedia/commons/e/ee/';
 const GRUMPY_IMG = 'Grumpy_Cat_by_Gage_Skidmore.jpg';
 const MAX_IMAGE_SIZE$2 = 5 * 1024 * 1024;
-const MEOW_REGEX = /^\/meow(via)?(?: (.+))?\s*$/im;
+const MEOW_REGEX = /^\/meow(vie)?(?: (.+))?\s*$/im;
 const GRUMPY_KEYWORDS_REGEX = /^(no|grumpy)\s*$/i;
 async function checkImageSize$2(url) {
     try {
@@ -43724,7 +43724,7 @@ const genericCommentHandler$6 = async (payload, context, agent) => {
         logger.info('Meow command detected');
         // Parse the match groups
         // match[0] is the full match
-        // match[1] is "via" if present (for movie cats/GIFs)
+        // match[1] is "vie" if present (for movie cats/GIFs)
         // match[2] is the category if present
         const movieCat = !!match[1];
         const category = (match[2] || '').trim();
