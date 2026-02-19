@@ -43639,7 +43639,7 @@ async function checkImageSize$2(url) {
         // (some servers don't provide this header)
         return true;
     }
-    catch (error) {
+    catch {
         // Log the error but allow the image (better user experience)
         // The actual image fetch will fail if there's a real issue
         return true;

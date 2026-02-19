@@ -40,7 +40,7 @@ async function checkImageSize(url: string): Promise<boolean> {
     // If no content-length header, assume it's OK
     // (some servers don't provide this header)
     return true
-  } catch (error) {
+  } catch {
     // Log the error but allow the image (better user experience)
     // The actual image fetch will fail if there's a real issue
     return true
