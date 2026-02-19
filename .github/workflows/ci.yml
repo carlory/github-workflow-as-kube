@@ -62,10 +62,12 @@ jobs:
 
       - name: Print Output
         id: output
+        env:
+          WORKFLOW_DATA: ${{ steps.test-action.outputs.workflow_data }}
         run: |
           echo "Event Name: ${{ steps.test-action.outputs.event_name }}"
           echo "Event GUID: ${{ steps.test-action.outputs.event_guid }}"
           echo "Repository: ${{ steps.test-action.outputs.repository }}"
           echo "Plugins Enabled: ${{ steps.test-action.outputs.plugins_enabled }}"
           echo "Workflow Data (JSON):"
-          echo '${{ steps.test-action.outputs.workflow_data }}'
+          echo "$WORKFLOW_DATA"
