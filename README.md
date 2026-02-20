@@ -752,9 +752,9 @@ count. A merge commit has more than one parent, indicating that branches were
 merged rather than rebased. When detected, the plugin:
 
 1. Adds the `do-not-merge/contains-merge-commits` label
-2. Posts a comment with instructions to fix the issue
-3. Monitors subsequent changes to the PR
-4. Removes the label and comment when the merge commits are removed
+1. Posts a comment with instructions to fix the issue
+1. Monitors subsequent changes to the PR
+1. Removes the label and comment when the merge commits are removed
 
 **Example Comment:**
 
@@ -763,8 +763,8 @@ When merge commits are detected, the plugin posts:
 > Adding label `do-not-merge/contains-merge-commits` because PR contains merge
 > commits, which are not allowed in this repository. Use `git rebase` to reapply
 > your commits on top of the target branch. Detailed instructions for doing so
-> can be found
-> [here](https://git-scm.com/book/en/v2/Git-Branching-Rebasing).
+> can be found in the
+> [Git Branching - Rebasing documentation](https://git-scm.com/book/en/v2/Git-Branching-Rebasing).
 
 ### Multiple Plugins
 
