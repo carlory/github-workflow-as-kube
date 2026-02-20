@@ -708,6 +708,64 @@ The following will NOT trigger the WIP label:
 - `Update WIP status` (WIP not at start)
 - `WIPP: typo` (not exactly "WIP")
 
+### Merge Commit Blocker Plugin
+
+The merge commit blocker plugin automatically detects and labels pull requests
+that contain merge commits, similar to the
+[Prow merge commit blocker plugin](https://github.com/kubernetes-sigs/prow/blob/main/pkg/plugins/mergecommitblocker/mergecommitblocker.go).
+
+**Features:**
+
+- Automatically detects merge commits (commits with more than one parent) in
+  pull requests
+- Adds the `do-not-merge/contains-merge-commits` label when merge commits are
+  found
+- Posts a helpful comment with instructions on how to fix using `git rebase`
+- Automatically removes the label when merge commits are fixed
+- Cleans up old bot comments when the label is removed
+- Works automatically on PR events (opened, reopened, synchronize)
+- No commands needed - fully automatic
+- Helps enforce a rebase-only workflow
+
+**Example Usage:**
+
+```yaml
+name: Merge Commit Detection
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  merge-commit-blocker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlory/github-workflow-as-kube@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          plugins: 'merge-commit-blocker'
+```
+
+**How It Works:**
+
+The plugin fetches all commits in a pull request and checks each commit's parent
+count. A merge commit has more than one parent, indicating that branches were
+merged rather than rebased. When detected, the plugin:
+
+1. Adds the `do-not-merge/contains-merge-commits` label
+1. Posts a comment with instructions to fix the issue
+1. Monitors subsequent changes to the PR
+1. Removes the label and comment when the merge commits are removed
+
+**Example Comment:**
+
+When merge commits are detected, the plugin posts:
+
+> Adding label `do-not-merge/contains-merge-commits` because PR contains merge
+> commits, which are not allowed in this repository. Use `git rebase` to reapply
+> your commits on top of the target branch. Detailed instructions for doing so
+> can be found in the
+> [Git Branching - Rebasing documentation](https://git-scm.com/book/en/v2/Git-Branching-Rebasing).
+
 ### Multiple Plugins
 
 You can enable multiple plugins by providing a comma-separated list:
@@ -716,7 +774,7 @@ You can enable multiple plugins by providing a comma-separated list:
 - uses: carlory/github-workflow-as-kube@v1
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
-    plugins: 'cat,dog,help,hold,pony,shrug,size,stage,wip,yuks'
+    plugins: 'cat,dog,help,hold,merge-commit-blocker,pony,shrug,size,stage,wip,yuks'
 ```
 
 ## Workflow Data Output
