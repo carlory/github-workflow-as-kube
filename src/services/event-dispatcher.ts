@@ -11,6 +11,7 @@ import { catPlugin } from '../plugins/cat/cat.js'
 import { dogPlugin } from '../plugins/dog/dog.js'
 import { helpPlugin } from '../plugins/help/help.js'
 import { holdPlugin } from '../plugins/hold/hold.js'
+import { assignPlugin } from '../plugins/assign/assign.js'
 import { mergeCommitBlockerPlugin } from '../plugins/merge-commit-blocker/merge-commit-blocker.js'
 import { ponyPlugin } from '../plugins/pony/pony.js'
 import { shrugPlugin } from '../plugins/shrug/shrug.js'
@@ -52,6 +53,7 @@ export class EventDispatcher {
 
   private registerBuiltInPlugins(enabledPlugins: string[]): void {
     const plugins = [
+      assignPlugin,
       catPlugin,
       dogPlugin,
       helpPlugin,
