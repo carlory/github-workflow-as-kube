@@ -11,6 +11,7 @@ import { catPlugin } from '../plugins/cat/cat.js'
 import { dogPlugin } from '../plugins/dog/dog.js'
 import { helpPlugin } from '../plugins/help/help.js'
 import { holdPlugin } from '../plugins/hold/hold.js'
+import { lgtmPlugin } from '../plugins/lgtm/lgtm.js'
 import { assignPlugin } from '../plugins/assign/assign.js'
 import { mergeCommitBlockerPlugin } from '../plugins/merge-commit-blocker/merge-commit-blocker.js'
 import { ponyPlugin } from '../plugins/pony/pony.js'
@@ -58,6 +59,7 @@ export class EventDispatcher {
       dogPlugin,
       helpPlugin,
       holdPlugin,
+      lgtmPlugin,
       mergeCommitBlockerPlugin,
       ponyPlugin,
       shrugPlugin,
