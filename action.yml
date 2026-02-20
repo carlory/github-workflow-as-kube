@@ -14,7 +14,7 @@ inputs:
   plugins:
     description: Comma-separated list of plugins to enable
     required: false
-    default: 'cat,dog,help,pony,size,stage,yuks'
+    default: 'assign,cat,dog,help,pony,size,stage,yuks'
 
 outputs:
   event_name:
@@ -25,6 +25,8 @@ outputs:
     description: The repository name in owner/repo format
   plugins_enabled:
     description: List of enabled plugins
+  assign_action:
+    description: The assign action taken (assignees-updated, reviewers-updated)
   cat_posted:
     description: Whether a cat image was posted
   dog_posted:
