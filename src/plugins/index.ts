@@ -4,6 +4,7 @@
 
 export * from './registry.js'
 export * from './plugin-agent.js'
+export { approvePlugin } from './approve/approve.js'
 export { assignPlugin } from './assign/assign.js'
 export { catPlugin } from './cat/cat.js'
 export { dogPlugin } from './dog/dog.js'
