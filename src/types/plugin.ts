@@ -85,6 +85,9 @@ export type GenericCommentHandler = (
       title: string
       html_url: string
       state?: string
+      user?: {
+        login: string
+      }
       pull_request?: {
         url: string
         html_url: string
@@ -98,10 +101,14 @@ export type GenericCommentHandler = (
       title: string
       html_url: string
       state?: string
+      user?: {
+        login: string
+      }
     }
     review?: {
       id: number
       body?: string
+      state?: string
       user: {
         login: string
       }
